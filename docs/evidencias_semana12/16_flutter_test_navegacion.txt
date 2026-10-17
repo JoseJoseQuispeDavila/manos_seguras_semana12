@@ -1,0 +1,151 @@
+﻿00:00 +0: loading C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/migracion_test.dart
+00:00 +0: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/migracion_test.dart: una base v1 con datos se abre con el esquema actual sin perder nada
+00:00 +1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/migracion_test.dart: una base v1 con datos se abre con el esquema actual sin perder nada
+00:00 +2: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/migracion_test.dart: una base v1 con datos se abre con el esquema actual sin perder nada
+00:00 +3: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/migracion_test.dart: una base v1 con datos se abre con el esquema actual sin perder nada
+00:00 +4: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/migracion_test.dart: una base v1 con datos se abre con el esquema actual sin perder nada
+00:00 +5: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +5: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/migracion_test.dart: la versión del esquema es 2 (Reto 4 completado)
+  Skip: Descomente/skip: activar cuando el equipo implemente la v2.
+00:00 +5 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +6 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +7 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +8 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +9 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +10 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +11 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +12 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +13 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +14 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +15 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio inseguro queda en texto plano en la tabla preferencias
+00:00 +16 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 1 — CRUD de auditorías (CREATE y READ) observarAuditorias emite la lista al guardar
+00:00 +17 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 1 — CRUD de auditorías (CREATE y READ) observarAuditorias emite la lista al guardar
+00:00 +18 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 1 — CRUD de auditorías (CREATE y READ) observarAuditorias emite la lista al guardar
+00:00 +19 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +20 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +21 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +22 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +23 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +24 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +25 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +26 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +27 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: el token del repositorio seguro no aparece en el archivo SQLite
+00:00 +28 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 3 — UPDATE y borrado lógico eliminarLogicamente la oculta del listado pero no la borra
+00:00 +29 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/entidades_test.dart: Catálogos (Momento, Acción) la omisión es la única acción que no es cumplimiento
+00:00 +30 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +31 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +32 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +33 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +34 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +35 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +36 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +37 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +38 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +39 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +40 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +41 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +42 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +43 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +44 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +45 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +46 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +47 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +48 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +49 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/sesion_insegura_test.dart: borrar la fila no es suficiente: el rastro desaparece tras VACUUM
+00:00 +50 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador reemplazarTodo guarda y escribe la marca de sincronización
+00:00 +51 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador reemplazarTodo es idempotente (no acumula duplicados)
+00:00 +52 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: GeneradorTokenSimulado emite un token con el prefijo del proyecto y suficiente entropía
+00:00 +53 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: GeneradorTokenSimulado emite un token con el prefijo del proyecto y suficiente entropía
+00:00 +54 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador con caché vencida y servicio caído devuelve la caché local
+00:00 +55 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador con caché vencida y servicio caído devuelve la caché local
+00:00 +56 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: GeneradorTokenSimulado con una semilla fija el token es reproducible (pruebas)
+00:00 +57 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: GeneradorTokenSimulado la expiración se calcula a partir del instante de emisión
+00:00 +58 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador con caché vigente NO consulta la red
+00:00 +59 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador con caché vigente NO consulta la red
+00:00 +60 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: TokenSesion · vigencia avisa cuando está por expirar
+00:00 +61 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador descarga exitosa guarda en caché y devuelve origen red
+00:01 +62 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador descarga exitosa guarda en caché y devuelve origen red
+00:01 +63 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador descarga exitosa guarda en caché y devuelve origen red
+00:01 +64 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: TokenSesion · huella y serialización tokens distintos producen huellas distintas
+00:01 +65 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador un error HTTP 500 se traduce a FalloRemoto
+00:01 +66 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: TokenSesion · huella y serialización toString NO revela el valor del token
+00:01 +67 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 2 — caché offline-first del indicador un JSON ilegible se traduce a FalloRemoto
+00:01 +68 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: TokenSesion · huella y serialización serializar y desdeAlmacen reconstruyen el mismo token
+00:01 +69 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial una oportunidad con auditoría inexistente es rechazada
+00:01 +70 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: TokenSesion · huella y serialización un texto ilegible produce FalloDeValidacion, no una excepción técnica
+00:01 +71 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial no se puede guardar una auditoría con establecimiento inexistente
+00:01 +72 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial no se puede guardar una auditoría con establecimiento inexistente
+00:01 +73 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: TokenSesion · huella y serialización un campo faltante se rechaza con un mensaje en español
+00:01 +74 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial el resumen agregado se calcula en SQL
+00:01 +75 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial el resumen agregado se calcula en SQL
+00:01 +76 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial el resumen agregado se calcula en SQL
+00:01 +77 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial el resumen agregado se calcula en SQL
+00:01 +78 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial el resumen agregado se calcula en SQL
+00:01 +79 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial el resumen agregado se calcula en SQL
+00:01 +80 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/domain/sesion_test.dart: Sesion toString no expone el documento completo ni el token
+00:01 +81 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial resumenPorMomento agrupa las cinco categorías
+00:01 +82 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial resumenPorMomento agrupa las cinco categorías
+00:01 +83 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial resumenPorMomento agrupa las cinco categorías
+00:01 +84 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Reto 5 — integridad referencial resumenPorMomento agrupa las cinco categorías
+00:01 +85 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Sembrado de datos de laboratorio sembrar 3 auditorías produce 15 oportunidades
+00:01 +86 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Sembrado de datos de laboratorio sembrar 3 auditorías produce 15 oportunidades
+00:01 +87 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/captura_provider_test.dart: EstadoCaptura (valor inmutable) dos estados iguales son == y comparten hashCode
+00:01 +88 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Sembrado de datos de laboratorio dos sembrados con la misma semilla producen los mismos totales
+00:01 +89 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Sembrado de datos de laboratorio dos sembrados con la misma semilla producen los mismos totales
+00:01 +90 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Sembrado de datos de laboratorio dos sembrados con la misma semilla producen los mismos totales
+00:01 +91 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Sembrado de datos de laboratorio dos sembrados con la misma semilla producen los mismos totales
+00:01 +92 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Sembrado de datos de laboratorio dos sembrados con la misma semilla producen los mismos totales
+00:01 +93 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/captura_provider_test.dart: Captura (Notifier) agregar() añade la oportunidad con el número correlativo
+00:01 +94 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Persistencia real y transacciones los datos sobreviven al cierre y reapertura del MISMO archivo
+00:01 +95 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Persistencia real y transacciones los datos sobreviven al cierre y reapertura del MISMO archivo
+00:01 +96 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Persistencia real y transacciones los datos sobreviven al cierre y reapertura del MISMO archivo
+00:01 +97 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Persistencia real y transacciones los datos sobreviven al cierre y reapertura del MISMO archivo
+00:01 +98 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Persistencia real y transacciones los datos sobreviven al cierre y reapertura del MISMO archivo
+00:01 +99 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/data/repositorios_test.dart: Persistencia real y transacciones los datos sobreviven al cierre y reapertura del MISMO archivo
+00:01 +100 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/observador_riverpod_test.dart: el observador cuenta eventos sin registrar valores ni errores
+00:01 +101 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/observador_riverpod_test.dart: el observador cuenta eventos sin registrar valores ni errores
+00:01 +101 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/captura_provider_test.dart: Captura (Notifier) fallo de preferencia no duplica una auditoría ya guardada
+No se pudo guardar la preferencia del establecimiento.
+00:01 +102 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/observador_riverpod_test.dart: el observador cuenta eventos sin registrar valores ni errores
+[riverpod] - fallido
+00:01 +103 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/observador_riverpod_test.dart: el observador cuenta eventos sin registrar valores ni errores
+[riverpod] - estadoDePrueba
+00:01 +104 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/captura_provider_test.dart: Captura (Notifier) dos guardados simultáneos no duplican la auditoría
+00:01 +105 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/captura_provider_test.dart: Captura (Notifier) descartar() vuelve al estado inicial
+00:01 +106 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/captura_provider_test.dart: Captura (Notifier) es keepAlive: sin oyentes el borrador sigue ahí
+00:01 +107 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +108 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +109 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +110 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +111 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +112 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +113 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +114 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +115 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:01 +116 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +117 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +118 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +119 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +120 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +120 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/tema_provider_test.dart: temaProvider si el almacén falla al escribir, el modo se mantiene en memoria
+No se pudo guardar la preferencia de tema: Bad state: Fallo simulado de escritura (prueba).
+00:02 +121 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +122 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +123 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: la pantalla de bienvenida muestra los 5 Momentos
+00:02 +124 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: sin sesión, la pantalla invita a iniciarla
+00:02 +125 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: sin sesión, la pantalla invita a iniciarla
+00:02 +126 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: sin sesión, la pantalla invita a iniciarla
+00:02 +127 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/widget_test.dart: el botón de regreso vuelve de establecimiento al inicio
+00:03 +128 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/widget_test.dart: el botón de regreso vuelve de establecimiento al inicio
+00:03 +129 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/widget_test.dart: el botón de regreso vuelve de establecimiento al inicio
+00:03 +130 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/widget_test.dart: el botón de regreso vuelve de establecimiento al inicio
+00:03 +131 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: con credenciales correctas la sesión queda activa
+00:03 +132 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: con credenciales correctas la sesión queda activa
+00:03 +133 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: con credenciales correctas la sesión queda activa
+00:03 +134 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: registrar oportunidades y guardar llama al repositorio
+00:03 +135 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: registrar oportunidades y guardar llama al repositorio
+00:03 +136 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantallas_test.dart: registrar oportunidades y guardar llama al repositorio
+00:03 +137 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: cerrar sesión vacía el almacén seguro
+00:04 +138 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: cerrar sesión vacía el almacén seguro
+00:04 +139 ~1: C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/test/presentation/pantalla_sesion_test.dart: la interfaz reacciona a los cambios del provider
+00:04 +140 ~1: All tests passed!

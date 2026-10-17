@@ -1,0 +1,3099 @@
+﻿
+===== PÃGINA 1 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+1
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Departamento Académico de Ingeniería de Sistemas
+Escuela Profesional de Ingeniería de Sistemas
+GUÍA DE APLICACIÓN N.° 08 · PARTE I
+Gestión de estado avanzada con Riverpod en el proyecto integrador
+ 
+«ManosSeguras»
+Providers simples, generación de código con @riverpod y migración de la captura de oportunidades a
+ 
+Notifier
+Curso: Desarrollo de Software II (SIS048)
+Ciclo VII · Semestre Académico 2026-II · Modalidad presencial
+Docente: Mtro. Ing. Yover Collantes Valer
+Unidad de Aprendizaje II: Arquitectura Limpia, Persistencia y Gestión de Estado Avanzada
+Semana 12 · Sesión teórico-práctica · Temáticas 2.3.1, 2.3.2 y 2.3.3 del sílabo
+Instrumento de evaluación: Guía de Aplicación 08 · Parte I (15 % de la Segunda Unidad · ficha
+ 
+sobre 20 puntos)
+Cusco, Perú · 2026
+
+===== PÃGINA 2 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+2
+Índice
+1. Presentación y continuidad del proyecto guiado
+1.1. Contexto: qué cambia esta semana y qué no
+1.2. Continuidad respecto de la Guía 07 · Parte II (Semana 11)
+1.3. Qué NO se pide todavía (y por qué)
+2. Correspondencia con el sílabo y resultados de aprendizaje
+2.1. Ficha del instrumento
+2.2. Relación entre las temáticas y las habilidades practicadas
+2.3. Resultados de aprendizaje esperados
+3. Hoja de ruta actualizada del proyecto ManosSeguras
+3.1. Estructura de archivos que debe quedar al terminar
+3.2. El grafo completo: get_it construye, Riverpod observa
+3.3. Cronograma sugerido de la semana
+4. Especificación funcional de lo nuevo
+4.1. `dependencias_providers.dart` — el puente
+4.2. `/oportunidades` — la captura migrada
+4.3. `/sesion` — el ciclo de vida observado
+4.4. `/` — la tarjeta de estado compartido
+4.5. `observador_riverpod.dart` — ver el grafo por dentro
+4.6. Contratos nuevos y su ubicación en las capas
+5. Ejercicio guiado 1: publicar el grafo de dependencias
+6. Ejercicio guiado 2: el tema de la aplicación como `Notifier`
+7. Ejercicio guiado 3: la captura de oportunidades (setState → Notifier)
+8. Ejercicio guiado 4: la sesión con guarda de reentrada
+9. Ejercicio guiado 5: las pruebas que antes no se podían escribir
+10. El informe técnico: cómo deben presentarlo
+10.1. Formato institucional obligatorio
+10.2. Estructura obligatoria, sección por sección
+10.3. Normas de evidencia: cómo se cita una prueba
+10.4. Figuras, tablas y referencias en APA 7
+10.5. Qué NO debe aparecer en el informe
+10.6. Lista de verificación antes de entregar
+11. Organización del equipo y flujo de trabajo
+12. Entregables
+13. Rúbrica de evaluación (20 puntos)
+14. Glosario actualizado
+15. Anexo: matriz de decisiones de estado (plantilla)
+
+===== PÃGINA 3 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+3
+16. Referencias
+
+===== PÃGINA 4 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+4
+1. Presentación y continuidad del proyecto guiado
+1.1. Contexto: qué cambia esta semana y qué no
+La Guía de Aplicación 08 · Parte I retoma el proyecto 
+ManosSeguras
+ exactamente donde lo dejó la
+ 
+Semana 11. 
+No se reinicia el código ni se rehace la arquitectura
+: se cambia la forma en que la capa de
+ 
+presentación administra y observa el estado, sustituyendo el 
+setState
+ repartido por las pantallas por
+ 
+providers de Riverpod
+.
+Componente
+¿Cambia esta semana?
+Detalle
+Capas del proyecto (Semana 8)
+No
+domain/
+, 
+data/
+ y 
+presentation/
+ 
+siguen igual. La migración toca
+ 
+únicamente 
+presentation/
+.
+Contenedor de dependencias (Semana 9)
+Sí, parcialmente
+get_it
+ sigue construyendo todo, pero
+ 
+deja de registrar singletons 
+con estado
+: se
+ 
+retiran 
+TemaApp
+ y 
+GestorSesion
+.
+Base de datos local (Semana 10)
+No
+Ni una tabla nueva, ni un cambio de
+ 
+schemaVersion
+. Se puede comprobar
+ 
+con 
+git diff
+ sobre
+ 
+manos_seguras_db.g.dart
+.
+Almacén seguro (Semana 11)
+No
+El token sigue en
+ 
+flutter_secure_storage
+. Cambia
+ 
+quién lo observa
+, no dónde se guarda.
+Gestión de estado (
+setState
+)
+Sí
+Es el objeto de la semana: 
+setState
+ se
+ 
+reserva para el estado efímero y el estado
+ 
+de negocio pasa a 
+Notifier
+.
+1.2. Continuidad respecto de la Guía 07 · Parte II (Semana 11)
+La entrega anterior dejó tres clases que administraban estado propio: 
+TemaApp
+ y 
+GestorSesion
+ (que
+ 
+eran 
+ValueNotifier
+ registrados en 
+get_it
+) y el estado interno de 
+_PantallaOportunidadesState
+ 
+(que era 
+setState
+ puro). Las tres se transforman esta semana:
+Semana 11
+Semana 12
+Qué se gana
+TemaApp extends
+ 
+ValueNotifier<ThemeMode>
+Tema extends _$Tema
+ 
+(
+Notifier<ThemeMode>
+)
+El tema se comparte sin
+ 
+ValueListenableBuilder
+ y se
+ 
+prueba sin montar 
+MaterialApp
+.
+GestorSesion extends
+ 
+ValueNotifier<Sesion?>
+SesionCtrl extends
+ 
+_$SesionCtrl
+ 
+(
+Notifier<EstadoSesion>
+)
+El estado ahora distingue «sin sesión» de
+ 
+«procesando» de «hubo un fallo», que un
+ 
+Sesion?
+ no podía expresar.
+_oportunidades
+ en el 
+State
+ de la
+ 
+pantalla
+EstadoCaptura
+ + 
+Captura
+ 
+notifier
+El borrador sobrevive a la navegación y
+ 
+sus reglas se prueban sin interfaz.
+Lo que no se pierde.
+ El ciclo de vida del token, el endurecimiento del almacén seguro, la evidencia
+ 
+forense y la política «el valor del token nunca se publica» siguen vigentes 
+palabra por palabra
+. Si alguna
+ 
+
+===== PÃGINA 5 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+5
+de esas reglas se rompe al migrar, la entrega se considera no válida por muy bien que funcione la
+ 
+interfaz.
+1.3. Qué NO se pide todavía (y por qué)
+La honestidad sobre el alcance es parte de la competencia profesional. Esta semana 
+no
+ se evalúa:
+
+`AsyncNotifier` ni `AsyncValue`.
+ El estado asíncrono se resuelve a mano, con un 
+bool
+ de progreso y
+ 
+un 
+String?
+ de error. Es deliberado: la Semana 13 reescribe esos providers con 
+AsyncValue
+ y el
+ 
+contraste es el contenido de esa sesión.
+
+Migrar todas las pantallas.
+ Solo se migran las tres que el sílabo exige. La lista de lo que 
+no
+ se migra y
+ 
+el motivo está en la teoría (§10.5) y debe copiarse al informe.
+
+`Mutations` ni persistencia offline.
+ Son funciones 
+experimentales
+ de Riverpod 3 y la documentación
+ 
+advierte que su API puede cambiar sin subir el número mayor de versión. Se mencionan en la teoría
+ 
+y no se usan.
+
+`riverpod_lint`.
+ No es instalable con el SDK del laboratorio (Dart 3.12.2). La limitación está verificada
+ 
+y documentada en el §8.6 de la teoría; en el informe se describe como limitación conocida, no como
+ 
+descuido.
+
+===== PÃGINA 6 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+6
+2. Correspondencia con el sílabo y resultados de aprendizaje
+2.1. Ficha del instrumento
+Elemento
+Detalle
+Asignatura
+SIS048 — Desarrollo de Software II
+Unidad
+Unidad de Aprendizaje II: Arquitectura Limpia, Persistencia y
+ 
+Gestión de Estado Avanzada
+Semana
+Semana 12
+Temáticas del sílabo
+2.3.1 ¿Por qué Riverpod? Provider vs Riverpod: motivación ·
+ 
+2.3.2 Providers simples y generación de código con
+ 
+@riverpod
+ · 2.3.3 
+Notifier
+: migración de la Lista de
+ 
+Tareas
+Actividades de aprendizaje
+«Comparan 
+setState
+ vs Riverpod en un mismo caso de
+ 
+uso» · «Crean sus primeros providers con Riverpod» ·
+ 
+«Migran la Lista de Tareas de 
+setState
+ a Riverpod»
+Instrumento
+Ficha de evaluación sobre 20 puntos: 
+Guía de Aplicación 08
+Peso
+15 % de la Segunda Unidad (tabla de evaluación del sílabo)
+Resultado de aprendizaje
+«Desarrollar y evaluar sistemas y componentes para resolver
+ 
+problemas con criterios de desarrollo sostenible» →
+ 
+«Implementa una interfaz responsiva en Flutter aplicando
+ 
+widgets y gestión de estado avanzada (Riverpod)»
+Producto
+Proyecto 
+manos_seguras
+ con la gestión de estado
+ 
+migrada, pruebas en verde e informe técnico
+Duración
+Una semana · sesión teórico-práctica de 2 bloques
+2.2. Relación entre las temáticas y las habilidades practicadas
+Temática
+Habilidad que se practica
+Dónde se evidencia
+2.3.1. Motivación
+Elegir una herramienta con argumentos y
+ 
+no por moda; explicar qué problema
+ 
+resuelve cada pieza.
+§3 del informe «Decisión de arquitectura»
+ 
++ §5 de esta guía.
+2.3.2. Providers simples y 
+@riverpod
+Configurar generación de código,
+ 
+interpretar el archivo generado y decidir
+ 
+cuándo 
+no
+ usarla.
+§4 y §5 del informe + ejercicios guiados 1
+ 
+y 2.
+2.3.3. 
+Notifier
+Modelar estado inmutable, migrar
+ 
+setState
+, mantener el
+ 
+comportamiento observable y probarlo.
+§6 y §7 del informe + ejercicios guiados 3,
+ 
+4 y 5.
+Actividades de aprendizaje
+Comparar dos soluciones del mismo caso
+ 
+de uso con métricas objetivas.
+Anexo B del informe «Comparación
+ 
+setState
+ vs Riverpod».
+2.3. Resultados de aprendizaje esperados
+Al terminar la semana, cada equipo debe poder demostrar que:
+1.
+La aplicación 
+arranca y funciona igual que la Semana 11
+, sin regresiones: se puede capturar una
+ 
+auditoría, guardarla, iniciarla sesión, ver el token y cerrarla.
+
+===== PÃGINA 7 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+7
+2.
+El estado de negocio 
+ya no vive en los widgets
+: 
+grep -rn setState lib/
+ no devuelve ningún
+ 
+setState
+ en las pantallas migradas.
+3.
+Existen 
+pruebas de los notifiers
+ que no montan ningún widget y que fallan si se rompe una regla de
+ 
+negocio.
+4.
+El proyecto 
+compila desde cero
+: 
+flutter pub get
+, 
+dart run build_runner build
+, 
+flutter
+ 
+analyze --fatal-infos
+ y 
+flutter test
+ se ejecutan en ese orden sin errores.
+5.
+El informe 
+justifica
+ cada 
+keepAlive
+ y cada decisión de diseño, y declara lo que no se migró y por
+ 
+qué.
+
+===== PÃGINA 8 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+8
+3. Hoja de ruta actualizada del proyecto ManosSeguras
+3.1. Estructura de archivos que debe quedar al terminar
+Lo que debe existir al terminar la semana
+manos_seguras/
+├── lib/
+│   ├── core/
+│   │   ├── fallos.dart
+│   │   ├── id.dart
+│   │   └── observador_riverpod.dart      ← NUEVO (Semana 12)
+│   ├── domain/                            (sin cambios: Semana 8)
+│   ├── data/                              (sin cambios: Semanas 10-11)
+│   ├── presentation/
+│   │   ├── providers/                     ← NUEVA CARPETA
+│   │   │   ├── dependencias_providers.dart      (providers simples)
+│   │   │   ├── resultado_operacion.dart         (sealed class)
+│   │   │   ├── tema_provider.dart  + .g.dart    (@riverpod)
+│   │   │   ├── captura_provider.dart + .g.dart  (@riverpod)
+│   │   │   └── sesion_provider.dart + .g.dart   (@riverpod)
+│   │   ├── di.dart                        (MODIFICADO)
+│   │   ├── pantallas/                     (3 migradas, 6 intactas)
+│   │   └── widgets/
+│   ├── router/app_router.dart             (sin cambios)
+│   └── main.dart                          (MODIFICADO: ProviderContainer)
+└── test/
+    ├── presentation/
+    │   ├── tema_provider_test.dart        ← NUEVO (reemplaza a tema_app_test)
+    │   ├── captura_provider_test.dart     ← NUEVO
+    │   ├── sesion_provider_test.dart      ← NUEVO
+    │   ├── pantalla_sesion_test.dart      (reescrito)
+    │   └── pantallas_test.dart            (ajustado)
+    └── … (dominio y datos, sin cambios)
+Los archivos eliminados
+lib/core/tema_app.dart
+ y 
+lib/core/gestor_sesion.dart
+ 
+se eliminan
+ al terminar la migración.
+ 
+Dejar dos fuentes de verdad para el mismo estado es el error más caro que puede cometer un equipo:
+ 
+la pantalla cambiaría el tema en el provider y el 
+ValueNotifier
+ seguiría con el valor antiguo. Si su
+ 
+equipo decide conservarlos por precaución, debe justificarlo por escrito y 
+no
+ usarlos desde ninguna
+ 
+pantalla.
+3.2. El grafo completo: get_it construye, Riverpod observa
+El orden importa: construir → crear el motor → completar el estado → dibujar
+main()
+  │
+  ├─ WidgetsFlutterBinding.ensureInitialized()
+
+===== PÃGINA 9 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+9
+  ├─ iniciarDependencias()            ← get_it: abre SQLite y arma el grafo
+  │      ManosSegurasDb
+  │        ├── auditoriasDao  ──► AuditoriaRepositoryDrift
+  │        ├── indicadoresDao ──► IndicadorRepositoryOfflineFirst
+  │        └── preferenciasDao ─► PreferenciasRepositoryDrift
+  │      AlmacenSeguro ──► SesionRepositorySeguro
+  │      GeneradorTokenSimulado · DirectorioUsuariosSimulado
+  │
+  ├─ ProviderContainer()              ← Riverpod: el motor
+  │      ├─ (bridge) auditoriaRepositoryProvider
+  │      ├─ (bridge) preferenciasRepositoryProvider
+  │      ├─ (bridge) sesionRepositoryProvider
+  │      └─ (bridge) … seis más
+  │
+  ├─ temaProvider.cargarDesdeDisco()  ← ANTES del primer fotograma
+  ├─ sesionCtrlProvider.restaurar()   ← ANTES del primer fotograma
+  │
+  └─ runApp(UncontrolledProviderScope(container: contenedor, …))
+3.3. Cronograma sugerido de la semana
+Momento
+Actividad
+Entregable interno
+Sesión 1 (bloque 1)
+Lectura de la teoría §1–§9 y ejercicio
+ 
+guiado 1.
+Puente de dependencias funcionando.
+Sesión 1 (bloque 2)
+Ejercicios guiados 2 y 3.
+temaProvider
+ y 
+capturaProvider
+ 
+en verde.
+Trabajo autónomo 1
+Ejercicios guiados 4 y 5; ajuste de las
+ 
+pantallas.
+sesionCtrlProvider
+ y las pruebas
+ 
+de notifier.
+Trabajo autónomo 2
+Retos 1 a 5; redacción del informe.
+Informe con evidencias y
+ 
+verificar.sh
+ en verde.
+Sesión 2
+Sustentación de 5 minutos por equipo y
+ 
+coevaluación.
+Demostración del *hot-reload* de un
+ 
+provider.
+
+===== PÃGINA 10 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+10
+4. Especificación funcional de lo nuevo
+4.1. dependencias_providers.dart — el puente
+Qué es.
+ El archivo que publica el grafo de 
+get_it
+ como providers de Riverpod. Es la respuesta del
+ 
+proyecto a la temática 2.3.1.
+Provider
+Tipo del valor
+Consumidor principal
+auditoriaRepositoryProvider
+AuditoriaRepository
+capturaProvider
+preferenciasRepositoryProvi
+der
+PreferenciasRepository
+temaProvider
+,
+ 
+capturaProvider
+sesionRepositoryProvider
+SesionRepository
+sesionCtrlProvider
+almacenSeguroProvider
+AlmacenSeguro
+Retos (bóveda)
+generadorTokenProvider
+GeneradorTokenSimulado
+sesionCtrlProvider
+directorioUsuariosProvider
+DirectorioUsuariosSimulado
+sesionCtrlProvider
+,
+ 
+PantallaSesion
+preferenciasDaoProvider
+PreferenciasDao
+Retos (diagnóstico)
+Requisito de aceptación.
+ Ningún archivo de 
+presentation/
+ puede volver a llamar a 
+getIt<…>()
+ 
+dentro de un 
+build()
+. Se verifica con:
+Criterio de aceptación verificable
+# Debe devolver SOLO las líneas de di.dart y de los providers.
+grep -rn "getIt<" lib/presentation/pantallas/
+4.2. /oportunidades — la captura migrada
+Comportamiento (idéntico al de la Semana 10, con dos mejoras).
+6.
+El usuario elige una acción del catálogo y pulsa *Agregar oportunidad*: se añade a la lista con su
+ 
+número correlativo y el momento que toca por ciclo.
+7.
+Puede quitar cualquier oportunidad; las demás 
+no se renumeran
+ (el correlativo es un identificador,
+ 
+no una posición).
+8.
+La tarjeta de resumen muestra cumplidas, total y porcentaje en vivo.
+9.
+*Guardar auditoría* persiste en SQLite y navega al detalle.
+Mejoras de esta semana:
+
+El borrador sobrevive a la navegación.
+ Antes, ir al catálogo y volver lo borraba. Ahora el botón
+ 
+principal de la pantalla de bienvenida dice «Continuar el borrador (N oportunidades)».
+
+Si el guardado falla, el borrador NO se pierde.
+ Es una decisión de diseño deliberada y verificada por
+ 
+una prueba: 
+guardar()
+ solo vacía el estado cuando el repositorio confirma el guardado.
+Elemento
+Antes
+Ahora
+Tipo de widget
+StatefulWidget
+ConsumerWidget
+Nº de campos de estado en el widget
+6
+0
+
+===== PÃGINA 11 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+11
+Nº de 
+setState
+5
+0
+Prueba de «agregar»
+monta la pantalla
+notifier.agregar()
+ + 
+expect
+4.3. /sesion — el ciclo de vida observado
+Comportamiento.
+ Idéntico al de la Semana 11: el usuario escribe documento y clave, inicia sesión, ve la
+ 
+huella
+ del token (nunca el token), el rol, el tiempo restante y el mecanismo de protección de la
+ 
+plataforma; puede cerrar sesión y el almacén seguro queda vacío.
+Lo nuevo.
+ El indicador de progreso y el último error dejan de ser campos del 
+State
+ y pasan a
+ 
+EstadoSesion
+:
+El estado de la sesión en la Semana 12
+@immutable
+class EstadoSesion {
+  const EstadoSesion({this.sesion, this.procesando = false,
+                      this.ultimoFallo});
+  final Sesion? sesion;
+  final bool procesando;
+  final String? ultimoFallo;
+  bool get haySesionActiva =>
+      sesion != null && sesion!.activaEn(DateTime.now());
+}
+Requisito de seguridad que NO se negocia.
+ 
+EstadoSesion.toString()
+ está escrito a mano y 
+nunca
+ 
+incluye el valor del token. La prueba 
+«el valor del token nunca vive en el estado de forma
+ 
+legible»
+ lo verifica, y la prueba de widget 
+«el valor del token NO se muestra en la
+ 
+pantalla»
+ se conserva de la Semana 11.
+4.4. / — la tarjeta de estado compartido
+Qué es.
+ Una tarjeta nueva en la pantalla de bienvenida que muestra, sin comunicarse con ninguna otra
+ 
+pantalla, tres datos: el borrador en curso, la sesión activa y el último establecimiento auditado.
+Por qué existe.
+ Es la 
+evidencia visual
+ de la temática 2.3.1. Con 
+setState
+ esta tarjeta era imposible sin
+ 
+subir el estado a un ancestro: aquí basta una línea, 
+ref.watch(capturaProvider)
+, y el dato aparece
+ 
+actualizado incluso antes de que el usuario navegue a la pantalla de captura. Es también el mejor
+ 
+candidato para una captura de pantalla del informe.
+4.5. observador_riverpod.dart — ver el grafo por dentro
+Qué es.
+ Un 
+ProviderObserver
+ que registra los cuatro eventos del ciclo de vida de los providers
+ 
+(creado, actualizado, destruido, fallido) con el 
+nombre
+ del provider, y lleva contadores.
+Cómo se comprueba.
+ Al ejecutar 
+flutter run
+ y navegar entre pantallas, la consola muestra líneas
+ 
+como 
+[riverpod] + capturaProvider
+ y 
+[riverpod] ~ capturaProvider → EstadoCaptura(3
+ 
+
+===== PÃGINA 12 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+12
+oportunidades, …)
+. Esa traza, junto con la salida de 
+flutter test
+, es la evidencia de que el ciclo de
+ 
+vida de los providers se entendió.
+Regla de seguridad del observador
+El observador imprime el resultado de 
+toString()
+ del estado. Por eso 
+EstadoSesion.toString()
+ y
+ 
+EstadoCaptura.toString()
+ están escritos a mano y 
+no
+ vuelcan campos sensibles. Un observador
+ 
+que imprima el token de sesión en los registros del dispositivo es una fuga de datos (temática 2.2.4,
+ 
+MASWE-0005) y anula el trabajo de la Semana 11.
+4.6. Contratos nuevos y su ubicación en las capas
+Artefacto nuevo
+Capa
+Tipo
+Justificación de la ubicación
+ResultadoOperacion
+ (+ 3
+ 
+subclases)
+presentation/
+providers/
+sealed class
+Es un contrato 
+entre el notifier y
+ 
+la pantalla
+, no una entidad de
+ 
+dominio. Si en la Semana 13 se
+ 
+reemplaza por 
+AsyncValue
+,
+ 
+se borra sin tocar el dominio.
+EstadoCaptura
+presentation/
+providers/
+Clase inmutable
+Contiene
+ 
+OportunidadRegistro
+,
+ 
+que 
+sí
+ es de dominio, pero el
+ 
+estado de la pantalla (qué
+ 
+acción está seleccionada, si está
+ 
+guardando) es de presentación.
+EstadoSesion
+presentation/
+providers/
+Clase inmutable
+Envuelve la entidad 
+Sesion
+ 
+(dominio) con estado de interfaz
+ 
+(procesando, último fallo).
+RegistroDeProviders
+core/
+ProviderObserver
+Es infraestructura transversal de
+ 
+depuración, no presentación:
+ 
+podría usarse también desde
+ 
+pruebas de integración.
+Criterio de arquitectura que se evalúa.
+ Ningún archivo de 
+presentation/providers/
+ puede importar
+ 
+drift
+, 
+flutter_secure_storage
+, 
+get_it
+ (salvo el puente) ni 
+package:flutter/material.dart
+ 
+con fines de interfaz. La única excepción legítima es 
+ThemeMode
+, que es un tipo de Flutter que representa
+ 
+una preferencia de la aplicación.
+
+===== PÃGINA 13 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+13
+5. Ejercicio guiado 1: publicar el grafo de dependencias
+Tiempo estimado:
+ 30 minutos. 
+Temática:
+ 2.3.2. 
+Resultado:
+ la aplicación arranca con 
+ProviderScope
+ y
+ 
+las pantallas pueden leer dependencias sin 
+getIt
+.
+Paso 1. Instalar el tren de versiones
+Paso 1
+# 1. Añadir dependencias (versiones verificadas, véase teoría §4.2)
+flutter pub add flutter_riverpod:3.4.3 riverpod_annotation:4.0.7
+flutter pub add dev:riverpod_generator:4.0.9 dev:build_runner
+# 2. Comprobar qué se resolvió (NO confíe en el número que escribió)
+flutter pub deps --style=compact | grep riverpod
+# 3. Verificar el SDK del laboratorio
+dart --version          # debe ser 3.12.x
+Si 
+flutter pub get
+ falla con un mensaje larguísimo sobre 
+analyzer
+, 
+test_api
+ o 
+custom_lint
+, 
+no
+ 
+intente arreglarlo a ciegas: lea el §4.2 de la teoría y compruebe el tren de versiones. Ese error es el
+ 
+antipatrón 14.8.
+Paso 2. Escribir el puente
+Cree 
+lib/presentation/providers/dependencias_providers.dart
+ con un 
+Provider
+ por cada
+ 
+dependencia que las pantallas necesiten. Empiece por dos y amplíe cuando las necesite (no copie las
+ 
+siete de golpe: escriba solo las que su código use).
+Paso 2
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../domain/repositorios/auditoria_repository.dart';
+import '../../domain/repositorios/indicador_repository.dart';
+import '../di.dart';
+final Provider<AuditoriaRepository> auditoriaRepositoryProvider =
+    Provider<AuditoriaRepository>(
+  (Ref ref) => getIt<AuditoriaRepository>(),
+  name: 'auditoriaRepository',
+);
+final Provider<PreferenciasRepository> preferenciasRepositoryProvider =
+    Provider<PreferenciasRepository>(
+  (Ref ref) => getIt<PreferenciasRepository>(),
+  name: 'preferenciasRepository',
+);
+La regla que no se puede romper
+El puente 
+solo lee
+ 
+getIt
+; jamás construye. Si escribiera
+ 
+AuditoriaRepositoryDrift(AuditoriasDao(base))
+ estaría duplicando el grafo de la Semana 9 y
+ 
+
+===== PÃGINA 14 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+14
+las pruebas ya no podrían sustituir los dobles.
+Paso 3. Envolver la aplicación en el contenedor
+En 
+main.dart
+, sustituya el 
+runApp(const ManosSegurasApp())
+ por la creación explícita del
+ 
+contenedor:
+Paso 3
+final ProviderContainer contenedor = ProviderContainer();
+runApp(
+  UncontrolledProviderScope(
+    container: contenedor,
+    child: const ManosSegurasApp(),
+  ),
+);
+¿Por qué `UncontrolledProviderScope` y no `ProviderScope`?
+ Porque en los pasos siguientes el estado
+ 
+se va a completar 
+antes
+ de dibujar (tema y sesión). Si su equipo prefiere empezar con 
+ProviderScope
+ y
+ 
+cambiar después, es válido: solo tendrá que aceptar un destello inicial del tema.
+Paso 4. Convertir la raíz en ConsumerWidget
+Paso 4 (se completa en el ejercicio guiado 2)
+class ManosSegurasApp extends ConsumerWidget {
+  const ManosSegurasApp({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode modoActual = ref.watch(temaProvider);
+    return MaterialApp.router(
+      // …
+      themeMode: modoActual,
+      routerConfig: appRouter,
+    );
+  }
+}
+Verificación del ejercicio 1
+Verificación
+flutter analyze --fatal-infos     # sin hallazgos
+flutter test                      # las 111 pruebas siguen en verde
+Atención al número:
+ al terminar este ejercicio, el contador de pruebas debe seguir siendo 
+111
+. Si bajó,
+ 
+se rompió algo; si subió, es que ya empezaron el ejercicio 5.
+
+===== PÃGINA 15 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+15
+6. Ejercicio guiado 2: el tema de la aplicación como Notifier
+Tiempo estimado:
+ 45 minutos. 
+Temáticas:
+ 2.3.2 y 2.3.3. 
+Resultado:
+ 
+temaProvider
+ reemplaza a
+ 
+TemaApp
+ y el modo claro/oscuro se cambia desde la interfaz.
+Paso 1. Escribir el provider
+Paso 1
+// lib/presentation/providers/tema_provider.dart
+import 'package:flutter/material.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'dependencias_providers.dart';
+part 'tema_provider.g.dart';
+@Riverpod(keepAlive: true)
+class Tema extends _$Tema {
+  static const String clave = 'tema.modo';   // ← la MISMA de la S10
+  @override
+  ThemeMode build() => ThemeMode.system;
+  Future<void> cargarDesdeDisco() async {
+    try {
+      final String? guardado =
+          await ref.read(preferenciasRepositoryProvider).leer(clave);
+      state = _desdeTexto(guardado);
+    } catch (error) {
+      debugPrint('No se pudo leer la preferencia de tema: $error');
+    }
+  }
+  Future<void> cambiarYGuardar(ThemeMode nuevo) async {
+    state = nuevo;
+    await ref.read(preferenciasRepositoryProvider)
+        .guardar(clave, _aTexto(nuevo));
+  }
+  Future<void> alternar() => cambiarYGuardar(
+      state == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark);
+  // … _desdeTexto y _aTexto, copiados de TemaApp
+}
+Detalle que importa:
+ la clave 
+'tema.modo'
+ se conserva 
+exactamente
+. Si se cambia, las instalaciones
+ 
+existentes pierden la preferencia guardada: es un ejemplo real de compatibilidad hacia atrás y debe
+ 
+anotarse en el informe.
+Paso 2. Generar el código
+Paso 2
+
+===== PÃGINA 16 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+16
+dart run build_runner build
+# Debe aparecer el archivo nuevo:
+lib/presentation/providers/tema_provider.g.dart
+Si aparece 
+Target of URI doesn't exist: 'tema_provider.g.dart'
+, compruebe que la directiva
+ 
+part
+ está 
+después
+ de todos los imports. Si el archivo no se crea, revise la consola de 
+build_runner
+: casi
+ 
+siempre es un error de sintaxis en el archivo fuente.
+Paso 3. Cargar la preferencia antes de dibujar
+Paso 3
+await iniciarDependencias(usarAlmacenEnMemoria: _usarAlmacenEnMemoria);
+final ProviderContainer contenedor = ProviderContainer(
+  observers: <ProviderObserver>[RegistroDeProviders()],
+);
+await contenedor.read(temaProvider.notifier).cargarDesdeDisco();
+runApp(UncontrolledProviderScope(
+  container: contenedor,
+  child: const ManosSegurasApp(),
+));
+Observe lo que acaba de hacer.
+ La llamada se hace al contenedor, 
+no
+ a un widget: el provider se
+ 
+inicializa a sí mismo en el momento en que alguien lo pide. La documentación oficial lo exige: «AVOID
+ 
+initializing providers in a widget».
+Paso 4. Retirar el ValueNotifier antiguo
+10.
+Elimine el registro de 
+TemaApp
+ de 
+presentation/di.dart
+.
+11.
+Elimine el archivo 
+lib/core/tema_app.dart
+.
+12.
+Elimine el 
+ValueListenableBuilder
+ de 
+main.dart
+.
+13.
+Sustituya la prueba 
+test/presentation/tema_app_test.dart
+ por
+ 
+test/presentation/tema_provider_test.dart
+.
+Verificación del ejercicio 2
+Verificación
+flutter analyze --fatal-infos
+flutter test test/presentation/tema_provider_test.dart
+# Y la comprobación de que no quedaron dos fuentes de verdad:
+grep -rn "TemaApp" lib/ test/    # no debe devolver nada
+La prueba nueva, en tres líneas
+ProviderContainer.test(overrides:
+ 
+[preferenciasRepositoryProvider.overrideWithValue(prefs)])
+ — el repositorio se
+ 
+sustituye 
+sin tocar `get_it`
+ y el contenedor se destruye solo al terminar la prueba. Compárelo con la
+ 
+versión de la Semana 11, que registraba el doble en el contenedor global.
+
+===== PÃGINA 17 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+17
+7. Ejercicio guiado 3: la captura de oportunidades (setState → Notifier)
+Tiempo estimado:
+ 90 minutos (el ejercicio central de la semana). 
+Temática:
+ 2.3.3. 
+Resultado:
+ 
+capturaProvider
+ con 
+EstadoCaptura
+, y 
+/oportunidades
+ convertida en 
+ConsumerWidget
+ sin un solo
+ 
+setState
+.
+Paso 1. Inventariar el estado
+Antes de escribir nada, complete esta tabla en el informe. Es el paso 1 de las siete etapas del §10.2 de la
+ 
+teoría:
+Campo actual
+¿De negocio o efímero?
+Decisión
+_oportunidades
+Negocio (se comparte, sobrevive, tiene
+ 
+reglas)
+Va al provider
+_siguienteNumero
+Negocio (correlativo)
+Va al provider
+_accionSeleccionada
+Negocio (afecta a la próxima captura)
+Va al provider
+_guardando
+Negocio (progreso de una operación)
+Va al provider
+_ultimoEstablecimiento
+Negocio (preferencia persistida)
+Va al provider
+_cargandoPreferencia
+Negocio (progreso de una lectura)
+Va al provider
+Paso 2. Escribir la clase de estado inmutable
+Cinco reglas que la clase debe cumplir 
+todas
+:
+14.
+@immutable
+ y constructor 
+const
+.
+15.
+Todos los campos 
+final
+, con valor por defecto cuando tenga sentido (así 
+const EstadoCaptura()
+ 
+es el estado inicial).
+16.
+Un 
+copyWith
+ que permita crear el estado siguiente sin repetir campos.
+17.
+==
+ con 
+listEquals
+ para las listas (
+package:flutter/foundation.dart
+).
+18.
+hashCode
+ con 
+Object.hashAll
+ para la lista y 
+Object.hash
+ para el resto, usando 
+los mismos
+ 
+campos
+ que 
+==
+.
+Paso 3. Escribir el Notifier
+Un método por cada operación que antes hacía 
+setState
+, más dos que no existían:
+Método
+Qué hace
+¿Es nuevo?
+build()
+Devuelve 
+const EstadoCaptura()
+ 
+y lanza la lectura de la preferencia con
+ 
+unawaited
+ + 
+ref.mounted
+.
+Nuevo (reemplaza a 
+initState
+)
+seleccionarAccion(Accion)
+Cambia la acción de la próxima
+ 
+oportunidad.
+Migrado de 
+setState
+agregar()
+Añade la oportunidad con su número
+ 
+correlativo y el momento en ciclo.
+Migrado de 
+_agregar
+quitar(int)
+Elimina por número, sin renumerar.
+Migrado de 
+_quitar
+guardar()
+Persiste la auditoría y devuelve
+ 
+ResultadoOperacion
+.
+Migrado de 
+_guardar
+, ahora sin
+ 
+BuildContext
+
+===== PÃGINA 18 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+18
+descartar()
+Vacía el borrador.
+Nuevo
+La decisión de keepAlive hay que justificarla
+capturaProvider
+ se declara 
+@Riverpod(keepAlive: true)
+. Su equipo debe escribir 
+dos frases
+ en
+ 
+el informe explicando qué pasaría con el borrador si se dejara el valor por defecto (auto-dispose). La
+ 
+respuesta correcta incluye la palabra «navegación».
+Paso 4. Migrar la pantalla
+La conversión es mecánica si se sigue este orden:
+19.
+Cambiar 
+StatefulWidget
+ por 
+ConsumerWidget
+ y borrar la clase 
+State
+ completa.
+20.
+Al principio de 
+build
+, añadir 
+final EstadoCaptura estado =
+ 
+ref.watch(capturaProvider);
+.
+21.
+Sustituir cada 
+_campo
+ por 
+estado.campo
+.
+22.
+Sustituir cada 
+onPressed: _metodo
+ por 
+onPressed: () =>
+ 
+ref.read(capturaProvider.notifier).metodo()
+.
+23.
+Mover 
+_guardar()
+ a un método del widget que llame al notifier y haga el 
+switch
+ sobre
+ 
+ResultadoOperacion
+.
+24.
+Comprobar que 
+grep -n setState
+ sobre el archivo no devuelve nada.
+Paso 5. La política de fallo (decisión de diseño)
+Cuando el repositorio falla, ¿se pierde el borrador? La respuesta del proyecto de referencia es 
+no
+, y la
+ 
+prueba lo verifica:
+Paso 5
+test('guardar() informa el fallo y conserva el borrador', () async {
+  final ProviderContainer c = contenedor();
+  final Captura notifier = c.read(capturaProvider.notifier);
+  notifier.agregar();
+  auditorias.falla = true;              // el doble falla a propósito
+  final ResultadoOperacion resultado = await notifier.guardar();
+  expect(resultado, isA<OperacionFallida>());
+  expect(c.read(capturaProvider).oportunidades, hasLength(1));
+  expect(c.read(capturaProvider).guardando, isFalse);
+});
+Su equipo puede decidir lo contrario
+ —descartar el borrador y pedir que se recapture— pero entonces
+ 
+debe: (a) implementarlo, (b) cambiar la prueba y (c) justificarlo en el informe. Lo que 
+no
+ se acepta es no
+ 
+haber pensado la política: en una auditoría clínica, perder el trabajo del observador es un fallo grave.
+Verificación del ejercicio 3
+Verificación
+flutter analyze --fatal-infos
+
+===== PÃGINA 19 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+19
+flutter test test/presentation/captura_provider_test.dart
+flutter test
+# Criterios de aceptación:
+grep -rn "setState" lib/presentation/pantallas/pantalla_oportunidades.dart
+#   → sin resultados: la pantalla ya no tiene estado propio
+flutter test 2>&1 | tail -1     # 135 pruebas, 1 omitida
+8. Ejercicio guiado 4: la sesión con guarda de reentrada
+Tiempo estimado:
+ 60 minutos. 
+Temáticas:
+ 2.3.2 y 2.3.3. 
+Resultado:
+ 
+sesionCtrlProvider
+ reemplaza a
+ 
+GestorSesion
+ y 
+/sesion
+ deja de tener 
+setState
+.
+Paso 1. Escribir el estado
+El estado de la sesión ya no es un 
+Sesion?
+ sino un objeto con tres campos. El motivo es que la interfaz
+ 
+debe distinguir tres situaciones que un 
+null
+ no puede expresar:
+Situación
+Estado
+Qué muestra la interfaz
+No hay sesión
+procesando: false, sesion:
+ 
+null
+El formulario de inicio
+Operación en curso
+procesando: true
+El botón deshabilitado y el indicador
+ 
+girando
+Sesión activa
+sesion: Sesion(...)
+La tarjeta con la huella del token
+Falló la última operación
+ultimoFallo: 'mensaje'
+El aviso de error, ya consumido por
+ 
+SnackBar
+Paso 2. Escribir el notifier con la guarda
+Paso 2
+Future<ResultadoOperacion> iniciar({
+  required String documento,
+  required String clave,
+  DateTime? ahora,
+}) async {
+  if (state.procesando) {
+    return const OperacionSinDatos(
+        'Ya hay una operación de sesión en curso.');
+  }
+  state = state.copyWith(procesando: true, limpiarFallo: true);
+  try {
+    final UsuarioSimulado? usuario = ref
+        .read(directorioUsuariosProvider)
+        .autenticar(documento: documento, clave: clave);
+    if (usuario == null) throw const FalloDeAutenticacion();
+    final Sesion nueva = Sesion(
+      documento: usuario.documento,
+
+===== PÃGINA 20 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+20
+      nombre: usuario.nombre,
+      rol: usuario.rol,
+      token: ref.read(generadorTokenProvider).emitir(ahora: ahora),
+    );
+    await ref.read(sesionRepositoryProvider).guardar(nueva);
+    if (!ref.mounted) return const OperacionOk();
+    state = EstadoSesion(sesion: nueva);   // procesando vuelve a false
+    return OperacionOk('Sesión iniciada para ${nueva.nombre}.');
+  } on Fallo catch (fallo) {
+    if (!ref.mounted) return OperacionFallida(fallo.mensaje);
+    state = state.copyWith(procesando: false,
+                           ultimoFallo: fallo.mensaje);
+    return OperacionFallida(fallo.mensaje);
+  }
+}
+Por qué la guarda funciona
+El cuerpo de una función 
+async
+ se ejecuta de forma 
+síncrona hasta el primer `await`
+. Cuando la
+ 
+segunda pulsación comprueba 
+state.procesando
+, la primera ya lo dejó en 
+true
+. Si la guarda se
+ 
+colocara después del primer 
+await
+, no serviría de nada.
+Paso 3. Migrar la pantalla sin perder lo efímero
+PantallaSesion
+ es el ejemplo perfecto de la frontera del §11 de la teoría: conserva los
+ 
+TextEditingController
+ (efímeros) y delega el estado de negocio al provider. Por eso se convierte en
+ 
+ConsumerStatefulWidget
+, no en 
+ConsumerWidget
+.
+Paso 3
+class PantallaSesion extends ConsumerStatefulWidget {
+  const PantallaSesion({super.key});
+  @override
+  ConsumerState<PantallaSesion> createState() => _PantallaSesionState();
+}
+class _PantallaSesionState extends ConsumerState<PantallaSesion> {
+  // Estado EFÍMERO: vive y muere con la pantalla. No va a un provider.
+  final GlobalKey<FormState> _formulario = GlobalKey<FormState>();
+  final TextEditingController _documento = TextEditingController();
+  final TextEditingController _clave = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final EstadoSesion estado = ref.watch(sesionCtrlProvider);
+    final SesionCtrl controlador = ref.watch(sesionCtrlProvider.notifier);
+    // … y en los botones: estado.procesando, controlador.descripcionToken
+  }
+}
+
+===== PÃGINA 21 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+21
+Detalle fino:
+ al pulsar un usuario del directorio simulado, el código de la Semana 11 hacía 
+setState(()
+ 
+=> _documento.text = usuario.documento)
+. Ese 
+setState
+ 
+era innecesario
+:
+ 
+TextEditingController
+ ya es un 
+ValueNotifier
+ y el 
+TextField
+ lo escucha. Eliminarlo es un buen
+ 
+ejemplo de «cuánto 
+setState
+ sobraba» para el informe.
+Paso 4. Retirar GestorSesion y conservar las reglas de seguridad
+25.
+Elimine el registro de 
+GestorSesion
+ de 
+di.dart
+ y el archivo 
+core/gestor_sesion.dart
+.
+26.
+Conserve 
+intactas
+ las reglas del §4.3: nunca publicar el token, 
+toString()
+ a mano, limpiar el
+ 
+almacén al cerrar sesión y descartar el token vencido.
+27.
+Conserve la prueba de widget que verifica que el token no aparece en pantalla.
+28.
+Añada la prueba unitaria de la guarda de reentrada.
+Verificación del ejercicio 4
+Verificación
+flutter analyze --fatal-infos
+flutter test test/presentation/sesion_provider_test.dart
+flutter test test/presentation/pantalla_sesion_test.dart
+grep -rn "GestorSesion" lib/ test/     # no debe devolver nada
+
+===== PÃGINA 22 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+22
+9. Ejercicio guiado 5: las pruebas que antes no se podían escribir
+Tiempo estimado:
+ 60 minutos. 
+Temáticas:
+ todas. 
+Resultado:
+ al menos ocho pruebas nuevas de notifier,
+ 
+con 
+ProviderContainer
+, y la verificación de 
+keepAlive
+.
+Paso 1. Reconocer la diferencia
+Aspecto
+Prueba de widget (Semana 11)
+Prueba de notifier (Semana 12)
+¿Monta la interfaz?
+Sí: 
+pumpWidget
+No
+¿Busca botones por icono?
+Sí: 
+find.byIcon(...)
+No: llama al método
+¿Necesita 
+getIt
+?
+Sí, con 
+registerSingleton
+ y 
+reset
+No: usa 
+overrides
+Tiempo típico
+cientos de milisegundos
+milisegundos
+Qué verifica
+que la interfaz reacciona
+que la 
+regla de negocio
+ es correcta
+Las dos pruebas siguen siendo necesarias.
+ La de notifier demuestra que la regla es correcta; la de
+ 
+widget, que la interfaz la refleja. Sustituir una por otra es un error frecuente en las entregas.
+Paso 2. Escribir las pruebas obligatorias
+Mínimo exigido, con el nombre exacto que debe aparecer:
+#
+Prueba
+Qué demuestra
+1
+agregar() añade la
+ 
+oportunidad con el número
+ 
+correlativo
+El correlativo no se rompe al migrar.
+2
+quitar() elimina por número
+ 
+sin renumerar el resto
+La regla sutil de la Semana 10 se
+ 
+conserva.
+3
+guardar() persiste la
+ 
+auditoría y vacía el
+ 
+borrador
+El camino feliz completo.
+4
+guardar() informa el fallo y
+ 
+conserva el borrador
+La política de fallo decidida.
+5
+es keepAlive: sin oyentes el
+ 
+borrador sigue ahí
+La diferencia con el valor por defecto.
+6
+dos estados iguales son == y
+ 
+comparten hashCode
+El filtro de notificaciones de la versión 3.
+7
+iniciar() es reentrante-
+seguro: la segunda llamada
+ 
+no emite token
+La guarda del ejercicio 4.
+8
+restaurar() descarta un
+ 
+token vencido y limpia el
+ 
+almacén
+La regla de seguridad de la Semana 11.
+El error que invalida la prueba 5
+Si el provider 
+no
+ es 
+keepAlive
+, la prueba 5 fallará y eso es correcto: significa que el borrador se
+ 
+pierde. No la «arregle» eliminando la aserción; si su equipo decidió usar *auto-dispose* en la captura,
+ 
+la prueba debe afirmar lo contrario y el informe debe explicar por qué se acepta perder el trabajo al
+ 
+
+===== PÃGINA 23 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+23
+navegar.
+Paso 3. Ejecutar y medir
+Paso 3
+./scripts/verificar.sh
+# Salida esperada (proyecto de referencia, 15-oct-2026):
+#   flutter analyze --fatal-infos  →  No issues found!
+#   flutter test                   →  135 pruebas en verde (1 omitida)
+Anote los números de SU proyecto.
+ El informe debe declarar cuántas pruebas había antes y cuántas hay
+ 
+después de la migración, y qué pruebas nuevas verifican reglas que antes solo se comprobaban a mano.
+
+===== PÃGINA 24 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+24
+10. El informe técnico: cómo deben presentarlo
+10.1. Formato institucional obligatorio
+Elemento
+Especificación
+Extensión
+Entre 18 y 28 páginas 
+sin
+ contar anexos.
+Papel y márgenes
+A4, márgenes de 2,2 cm laterales y 2,4 cm superior.
+Tipografía
+Calibri 11 para el cuerpo y Consolas 9 para el código.
+Interlineado
+1,15 con sangría justificada.
+Encabezado
+Los dos logos institucionales (Universidad Andina del Cusco e
+ 
+Ingeniería de Sistemas) y el rótulo del documento.
+Pie de página
+Línea institucional y numeración automática.
+Colores
+Azul institucional 
+#194D84
+, cian 
+#00CEFE
+; nada de colores
+ 
+ajenos a la paleta.
+Portada
+Los mismos datos que la plantilla
+ 
+Semana12_Estructura_Informe_Tecnico
+:
+ 
+asignatura, docente, unidad, semana, integrantes.
+Citas
+APA 7. Toda afirmación técnica externa lleva cita en el texto
+ 
+y referencia al final.
+Idioma
+Español académico. Los términos técnicos (
+Notifier
+,
+ 
+override
+, 
+auto-dispose
+) se conservan en su idioma
+ 
+original y se definen la primera vez.
+10.2. Estructura obligatoria, sección por sección
+El informe tiene 
+once secciones y cuatro anexos
+. La plantilla
+ 
+Semana12_Estructura_Informe_Tecnico
+ ya trae los títulos, las tablas vacías y las instrucciones; el
+ 
+equipo la completa. La tabla siguiente resume qué se espera en cada una y cuánto pesa.
+§
+Sección
+Qué debe contener
+Puntos
+1
+Datos del equipo y del proyecto
+Integrantes con rol Scrum,
+ 
+repositorio, versión de Flutter y
+ 
+Dart, versiones exactas de los
+ 
+paquetes de Riverpod.
+—
+2
+Resumen ejecutivo
+Un párrafo de 150 palabras: qué
+ 
+se migró, qué se ganó y qué
+ 
+quedó pendiente. Sin capturas.
+1
+3
+Decisión de arquitectura: por
+ 
+qué Riverpod
+El problema (con datos del
+ 
+propio código), las alternativas
+ 
+evaluadas (
+setState
+,
+ 
+provider
+, 
+get_it
+ con
+ 
+ValueNotifier
+) y la
+ 
+justificación. 
+Con citas APA 7.
+3
+4
+Diseño de la capa de estado
+Diagrama del grafo (get_it +
+ 
+providers), tabla de los
+ 
+providers con su tipo y su
+ 
+ámbito, y la justificación de cada
+ 
+keepAlive
+.
+3
+5
+Providers simples y generación
+ 
+de código
+El puente de dependencias, la
+ 
+configuración de
+ 
+2
+
+===== PÃGINA 25 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+25
+build_runner
+, y la decisión
+ 
+sobre versionar o no los
+ 
+*.g.dart
+.
+6
+Migración de la captura
+ 
+(
+setState
+ → 
+Notifier
+)
+Tabla «antes/después» como la
+ 
+del §10.3 de la teoría, el estado
+ 
+inmutable explicado y la política
+ 
+de fallo justificada.
+3
+7
+Migración de la sesión
+El 
+EstadoSesion
+, la guarda
+ 
+de reentrada y la 
+conservación
+ 
+íntegra
+ de las reglas de
+ 
+seguridad de la Semana 11.
+2
+8
+Pruebas y evidencias
+Salida literal de 
+flutter
+ 
+analyze --fatal-infos
+ y
+ 
+de 
+flutter test
+, tabla de
+ 
+pruebas nuevas y qué regla
+ 
+verifica cada una. 
+Sin capturas
+ 
+de terminal
+ (
+texto >
+ 
+imagen
+).
+3
+9
+Reconstrucciones y rendimiento
+El filtro 
+==
+, la granularidad de la
+ 
+observación y, si usaron
+ 
+select
+, la medición que lo
+ 
+justifica.
+1
+10
+Alcance: qué no se migró y por
+ 
+qué
+La tabla del §10.5 de la teoría,
+ 
+adaptada al proyecto del
+ 
+equipo.
+1
+11
+Conclusiones y trabajo futuro
+Qué aprendió el equipo, qué
+ 
+limitación queda (entre ellas la
+ 
+ausencia de 
+riverpod_lint
+)
+ 
+y qué espera de la Semana 13.
+1
+A
+Anexo A — Configuración del
+ 
+entorno
+Versiones, comandos y
+ 
+problemas encontrados con su
+ 
+solución.
+—
+B
+Anexo B — Comparación
+ 
+setState
+ vs Riverpod
+El ejercicio guiado 3 con su tabla
+ 
+de métricas y la conclusión
+ 
+argumentada.
+—
+C
+Anexo C — Evidencias
+ 
+censuradas
+Capturas de pantalla revisadas:
+ 
+sin
+ tokens, 
+sin
+ datos personales
+ 
+reales.
+—
+D
+Anexo D — Guion de la
+ 
+sustentación
+Los cinco minutos,
+ 
+cronometrados y en español.
+—
+10.3. Normas de evidencia: cómo se cita una prueba
+Una afirmación sin evidencia es una opinión. Estas son las reglas que se aplican al calificar:
+29.
+Toda afirmación de funcionamiento lleva su comando y su salida literal.
+ Escriba el comando y
+ 
+pegue el resultado. No sirve «funciona correctamente».
+30.
+El texto se pega, no se fotografía.
+ Una captura de la terminal no se puede buscar, ni copiar, ni
+ 
+verificar. Use un bloque de código con la salida real.
+31.
+Las capturas de pantalla son para la interfaz.
+ Sirven para mostrar el estado compartido, la tarjeta de
+ 
+sesión y la traza del observador; deben estar 
+censuradas
+: ningún token, ninguna clave y ningún dato
+ 
+personal real.
+
+===== PÃGINA 26 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+26
+32.
+Toda cifra debe ser reproducible.
+ Si el informe dice «135 pruebas», el comando del §8 debe producir
+ 
+135 pruebas. Una cifra que el docente no puede reproducir resta puntos.
+33.
+Las citas externas van en APA 7
+, con autor, año, título y URL. Las afirmaciones sobre Riverpod deben
+ 
+apoyarse en la documentación oficial, no en blogs. La lista de fuentes verificadas de la semana está
+ 
+en 
+fuentes/Fuentes_Verificadas_Semana12.md
+ y puede usarse como punto de partida (citando
+ 
+la fuente original, no el resumen).
+10.4. Figuras, tablas y referencias en APA 7
+Elemento
+Formato obligatorio
+Figura
+Encima: 
+Figura N
+ en negrita y el título en cursiva. Debajo:
+ 
+nota con la fuente. En el texto se menciona («véase la figura
+ 
+3»).
+Tabla
+Encima: 
+Tabla N
+ en negrita y el título en cursiva. Debajo:
+ 
+nota con la fuente. Sin líneas verticales.
+Cita textual corta
+Entre comillas, con autor, año y página: (Rousselet, 2026,
+ 
+párr. 4).
+Cita parafraseada
+(Rousselet, 2026).
+Cita de código
+Indicar el paquete y la versión exacta: «riverpod 3.4.3,
+ 
+lib/src/core/provider_container.dart
+».
+Referencias
+Lista alfabética al final, sangría francesa, con URL y fecha de
+ 
+consulta.
+10.5. Qué NO debe aparecer en el informe
+
+El valor de ningún token
+, ni completo ni parcialmente, ni «de ejemplo». Solo la huella y la fecha de
+ 
+expiración.
+
+Claves del directorio simulado
+ ni credenciales de ningún tipo.
+
+Datos personales reales
+ de pacientes, observadores o establecimientos. El proyecto usa datos
+ 
+ficticios: manténgalo así.
+
+Capturas con el nombre del equipo en la barra de tareas
+ o con ventanas ajenas a la actividad.
+
+Texto copiado de la documentación sin comillas ni cita.
+ El plagio anula la sección completa.
+
+Afirmaciones técnicas sin fuente verificable
+: «Riverpod es el más rápido», «todo el mundo lo usa»,
+ 
+«BLoC es mejor». Si se afirma algo comparativo, se mide o se cita.
+
+El `.g.dart` pegado como si fuera código propio.
+ Es código generado; en el informe se muestra solo
+ 
+si es necesario para explicar algo, y se identifica como generado.
+10.6. Lista de verificación antes de entregar
+Imprima esta lista y revísenla en equipo, en voz alta:
+
+flutter pub get
+ funciona en una máquina limpia.
+
+dart run build_runner build
+ no produce cambios inesperados en archivos versionados.
+
+flutter analyze --fatal-infos
+ termina sin hallazgos.
+
+flutter test
+ termina con todas las pruebas en verde (y se indica cuántas y cuántas se omiten).
+
+===== PÃGINA 27 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+27
+
+grep -rn setState lib/presentation/pantallas/
+ solo devuelve las pantallas 
+no
+ migradas, y
+ 
+esas están explicadas en el §10 del informe.
+
+grep -rn "getIt<" lib/presentation/pantallas/
+ no devuelve nada.
+
+Ningún 
+Text
+ del proyecto muestra el valor del token (la prueba de la Semana 11 sigue en verde).
+
+Los tres 
+*.g.dart
+ de providers están versionados y coinciden con su fuente.
+
+El 
+.gitignore
+ incluye la excepción 
+!lib/presentation/providers/*.g.dart
+.
+
+El informe tiene las once secciones y los cuatro anexos, con las tablas completas.
+
+Todas las cifras del informe se reproducen con los comandos indicados.
+
+Las capturas están censuradas y los datos personales son ficticios.
+
+Las referencias están en APA 7 y toda cita del texto aparece en la lista.
+
+El repositorio está actualizado y el enlace del informe funciona.
+
+===== PÃGINA 28 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+28
+11. Organización del equipo y flujo de trabajo
+11.1. Roles y responsabilidades en esta semana
+Rol
+Responsabilidad esta semana
+Entregable verificable
+Scrum Master
+Coordinar la secuencia de los cinco
+ 
+ejercicios guiados y mantener el tablero al
+ 
+día.
+Acta de las dos dailies y tablero
+ 
+actualizado.
+Product Owner
+Definir la política de fallo (§7, paso 5) y
+ 
+validar que la aplicación se comporta
+ 
+como la Semana 11.
+Acta de validación con las pruebas de
+ 
+regresión.
+Arquitecto / Tech Lead
+Escribir el puente de dependencias y
+ 
+decidir 
+keepAlive
+ en cada provider.
+El archivo del puente y la tabla de
+ 
+decisiones del anexo.
+Responsable de calidad
+Escribir las ocho pruebas mínimas (§9) y
+ 
+ejecutar 
+verificar.sh
+ antes de cada
+ 
+*commit*.
+Salida de las pruebas y del análisis
+ 
+estático.
+Documentador
+Completar el informe con evidencias
+ 
+reproducibles y censurar las capturas.
+Informe en PDF y anexos.
+11.2. Flujo de trabajo con Git
+El proyecto ya tiene integración continua configurada (
+.github/workflows/flutter-semana12.yml
+).
+ 
+El flujo mínimo:
+Flujo mínimo de trabajo
+git checkout -b s12/riverpod-puente
+git add lib/presentation/providers/dependencias_providers.dart
+git commit -m "s12: publica el grafo de get_it como providers"
+# Antes de subir, SIEMPRE la verificación local:
+./scripts/verificar.sh
+git push origin s12/riverpod-puente
+# Abrir pull request y esperar el visto bueno del pipeline
+Una rama por ejercicio guiado
+Con cinco ejercicios y cinco integrantes, ramas separadas evitan el conflicto más doloroso de esta
+ 
+semana: dos personas editando a la vez el mismo 
+*.g.dart
+. 
+Regla práctica: quien toca un provider,
+ 
+regenera el código y hace `commit` del `.g.dart` en el mismo cambio.
+11.3. Riesgos de la semana y cómo mitigarlos
+Riesgo
+Probabilidad
+Mitigación
+Conflicto de versiones al añadir Riverpod
+Alta
+Fijar el tren exacto del §4.2 y comprobar
+ 
+con 
+flutter pub deps
+ 
+antes
+ de
+ 
+escribir código.
+
+===== PÃGINA 29 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+29
+*.g.dart
+ desactualizado en el
+ 
+repositorio
+Media
+Ejecutar 
+build_runner
+ y versionar el
+ 
+resultado en el mismo *commit*; el
+ 
+pipeline lo verifica.
+Se migra una pantalla y se rompe otra
+Media
+Migrar de a una pantalla y ejecutar
+ 
+flutter test
+ después de cada una.
+Se dejan dos fuentes de verdad
+ 
+(
+TemaApp
+ y 
+temaProvider
+)
+Media
+Eliminar el archivo antiguo en el mismo
+ 
+*commit* que introduce el nuevo.
+Se publica el token en la traza del
+ 
+observador
+Baja pero grave
+toString()
+ escrito a mano y revisión
+ 
+cruzada de
+ 
+core/observador_riverpod.dar
+t
+ y de los estados.
+El informe no declara lo que no se migró
+Alta
+Usar la tabla del §10.5 de la teoría como
+ 
+plantilla del §10 del informe.
+
+===== PÃGINA 30 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+30
+12. Entregables
+#
+Entregable
+Formato
+Dónde
+1
+Proyecto Flutter con la
+ 
+migración completa
+Repositorio Git
+Enlace en el §1 del informe
+2
+Salida de 
+flutter
+ 
+analyze --fatal-
+infos
+Texto
+§8 del informe
+3
+Salida de 
+flutter test
+Texto
+§8 del informe
+4
+Informe técnico (11
+ 
+secciones)
+PDF institucional
+Aula virtual
+5
+Cuatro anexos (A–D)
+PDF institucional
+Aula virtual
+6
+Capturas censuradas de la
+ 
+interfaz
+PNG
+Anexo C
+7
+Sustentación de 5 minutos
+Exposición
+Sesión 2
+Fecha y forma de entrega
+La entrega se cierra 
+antes
+ de la sesión 2. Un entregable que no se reproduce con los comandos
+ 
+indicados se devuelve sin calificar: es la misma regla que se aplica en la industria con un pipeline de
+ 
+integración continua.
+
+===== PÃGINA 31 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+31
+13. Rúbrica de evaluación (20 puntos)
+Ficha de evaluación sobre 20 puntos. La columna «Evidencia» indica 
+dónde
+ debe estar la prueba de cada
+ 
+criterio: si no está, el criterio no se califica.
+Criterio
+Pts
+Excelente
+Aceptable
+Insuficiente
+Evidencia
+1. Decisión de
+ 
+arquitectura
+ 
+justificada
+3
+Explica el problema
+ 
+con datos del propio
+ 
+código, compara al
+ 
+menos tres
+ 
+alternativas y cita
+ 
+fuentes oficiales en
+ 
+APA 7.
+Explica el problema y
+ 
+justifica la elección,
+ 
+con citas incompletas.
+Justifica por gusto o
+ 
+copia texto de un
+ 
+blog.
+§3 del informe
+2. Providers simples y
+ 
+puente de
+ 
+dependencias
+2
+El puente publica el
+ 
+grafo sin duplicarlo,
+ 
+los 
+name
+ están
+ 
+puestos y ninguna
+ 
+pantalla usa 
+getIt
+ 
+en 
+build
+.
+El puente funciona
+ 
+pero algún nombre
+ 
+falta o alguna
+ 
+pantalla sigue
+ 
+llamando a 
+getIt
+.
+Los providers
+ 
+construyen sus
+ 
+propias dependencias
+ 
+(grafo duplicado).
+grep
+ del §4.1
+3. Generación de
+ 
+código configurada y
+ 
+reproducible
+2
+Tren de versiones
+ 
+fijado y justificado,
+ 
+build_runner
+ 
+idempotente,
+ 
+*.g.dart
+ 
+versionados y
+ 
+explicados.
+Funciona, pero las
+ 
+versiones no están
+ 
+justificadas o el
+ 
+.g.dart
+ no está
+ 
+versionado.
+No compila desde
+ 
+cero o el 
+.g.dart
+ 
+no corresponde al
+ 
+fuente.
+§5 del informe +
+ 
+.gitignore
+4. Estado inmutable
+ 
+bien modelado
+2
+Estado inmutable con
+ 
+copyWith
+, 
+==
+ y
+ 
+hashCode
+ 
+coherentes y
+ 
+listEquals
+ para
+ 
+listas; se explica el
+ 
+filtro de la versión 3.
+Estado inmutable
+ 
+correcto, con 
+==
+ 
+incompleto.
+El estado es mutable
+ 
+o no implementa 
+==
+.
+§6 + prueba 6
+5. Migración
+ 
+completa de la
+ 
+captura
+3
+Cero 
+setState
+ en
+ 
+la pantalla migrada,
+ 
+comportamiento
+ 
+idéntico al de la
+ 
+Semana 11 y tabla
+ 
+«antes/después»
+ 
+completa.
+Migración funcional
+ 
+con algún 
+setState
+ 
+residual justificado.
+La pantalla funciona
+ 
+pero el estado sigue
+ 
+en el widget.
+§6 + 
+grep
+ 
+setState
+6. Decisión de
+ 
+keepAlive
+/
+autoD
+ispose
+ justificada
+2
+Cada provider tiene
+ 
+su ámbito decidido y
+ 
+justificado, con la
+ 
+prueba que lo
+ 
+demuestra.
+Decidido, con
+ 
+justificación débil en
+ 
+algún caso.
+Todos *auto-dispose*
+ 
+o todos 
+keepAlive
+ 
+sin criterio.
+§4 + prueba 5
+7. Pruebas nuevas de
+ 
+la lógica de estado
+3
+Ocho o más pruebas
+ 
+de notifier, sin
+ 
+pumpWidget
+, que
+ 
+fallan si se rompe una
+ 
+regla de negocio.
+Cinco a siete pruebas,
+ 
+o alguna depende del
+ 
+árbol de widgets.
+Menos de cinco
+ 
+pruebas nuevas.
+§8 + archivos de
+ 
+prueba
+8. Conservación de las
+ 
+reglas de seguridad
+ 
+(Semana 11)
+2
+El token nunca se
+ 
+publica,
+ 
+toString()
+ a
+ 
+mano, almacén limpio
+ 
+al cerrar y prueba de
+ 
+widget conservada.
+Se conserva lo
+ 
+esencial, sin prueba
+ 
+que lo verifique.
+Algún registro, 
+Text
+ 
+o 
+toString()
+ 
+publica el token.
+Pruebas de sesión
+9. Informe con
+ 
+evidencias
+ 
+2
+Todas las cifras se
+ 
+reproducen con los
+ 
+Informe completo
+ 
+con alguna evidencia
+ 
+Faltan secciones o las
+ 
+cifras no se
+ 
+Informe completo
+
+===== PÃGINA 32 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+32
+reproducibles
+comandos indicados;
+ 
+capturas censuradas;
+ 
+once secciones y
+ 
+cuatro anexos.
+no reproducible.
+reproducen.
+10. Sustentación y
+ 
+dominio del tema
+2
+Explica con sus
+ 
+palabras el ciclo de
+ 
+vida de un provider,
+ 
+demuestra el *hot-
+reload* y responde
+ 
+preguntas.
+Explica el trabajo
+ 
+realizado con apoyo
+ 
+del guion.
+Lee las diapositivas o
+ 
+no puede responder
+ 
+lo básico.
+Sesión 2
+Total: 20 puntos.
+ La nota de la ficha se convierte al 15 % de la Segunda Unidad, según la tabla de
+ 
+evaluación del sílabo. Los criterios 1, 7 y 9 concentran 8 de los 20 puntos porque son los que exigen
+ 
+comprensión y no solo ejecución.
+Criterio transversal no puntuado pero eliminatorio
+Si el proyecto 
+no compila desde cero
+ con los cuatro comandos del §8 (pub get, build_runner, analyze,
+ 
+test), la ficha se califica sobre 10 puntos como máximo. Un proyecto que «funciona en mi máquina»
+ 
+no es una entrega válida en esta asignatura.
+
+===== PÃGINA 33 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+33
+14. Glosario actualizado
+Solo los términos nuevos de esta semana; los de las semanas anteriores siguen vigentes en la Guía 07 ·
+ 
+Parte II.
+Término
+Definición
+Puente `get_it` → Riverpod
+Patrón por el que un archivo de providers publica el grafo de
+ 
+get_it
+ sin reconstruirlo. Permite migrar pantalla por pantalla.
+`ProviderScope` / `ProviderContainer`
+El widget y el objeto Dart que contienen el estado de todos los
+ 
+providers.
+`UncontrolledProviderScope`
+Widget que recibe un contenedor creado a mano; se usa cuando
+ 
+el estado se completa antes del primer fotograma.
+`Ref`
+Objeto de dependencias de un provider. Sin parámetro de tipo
+ 
+en la versión 3.
+`WidgetRef`
+Objeto de dependencias de un widget; llega por el
+ 
+build(context, ref)
+.
+`Notifier`
+Clase con estado propio; 
+build()
+ devuelve el estado inicial y
+ 
+state = …
+ lo reemplaza.
+`EstadoCaptura` / `EstadoSesion`
+Clases inmutables del proyecto que modelan el estado de
+ 
+negocio de dos pantallas.
+`ResultadoOperacion`
+sealed class
+ con tres casos (
+Ok
+, 
+SinDatos
+, 
+Fallida
+)
+ 
+que el notifier devuelve para que la pantalla decida el mensaje.
+`autoDispose` / `keepAlive`
+Modos de vida del estado de un provider. 
+autoDispose
+ es el
+ 
+valor por defecto de 
+@riverpod
+.
+`family`
+Modificador que da un estado por cada combinación de
+ 
+parámetros.
+`overrideWithValue`
+Método con el que una prueba sustituye un provider por un
+ 
+doble.
+`ProviderContainer.test()`
+Contenedor de pruebas que se destruye automáticamente al
+ 
+terminar la prueba.
+`ProviderObserver`
+Objeto que recibe todos los eventos del ciclo de vida de los
+ 
+providers.
+Guarda de reentrada
+Comprobación al principio de un método asíncrono que impide
+ 
+que dos pulsaciones rápidas ejecuten la operación dos veces.
+Estado efímero
+Estado propio de un widget (controladores, claves,
+ 
+animaciones). Se queda en el 
+State
+ y se maneja con
+ 
+setState
+.
+
+===== PÃGINA 34 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+34
+15. Anexo: matriz de decisiones de estado (plantilla)
+Complete esta matriz con 
+todos
+ los estados de su proyecto y adjúntela al §4 del informe. Es el
+ 
+documento que demuestra que la decisión de qué va a un provider fue razonada y no improvisada.
+Estado
+¿Compartido?
+¿Sobrevive a la
+ 
+navegación?
+¿Tiene reglas
+ 
+probables?
+Destino
+Ámbito
+Justificación
+Destino
+: 
+State
+ del widget · 
+Provider
+ simple · 
+Notifier
+ · 
+AsyncNotifier
+ (Semana 13) · 
+family
+.
+ 
+Ámbito
+: *auto-dispose* · 
+keepAlive
+.
+Ejemplo de fila completa, para que sirva de modelo:
+Estado
+¿Compartido?
+¿Sobrevive?
+¿Reglas?
+Destino
+Ámbito
+Justificación
+Borrador de la
+ 
+auditoría en
+ 
+curso
+Sí (bienvenida)
+Sí
+Sí (correlativo,
+ 
+política de fallo)
+Notifier
+keepAlive
+Perderlo obliga
+ 
+al observador a
+ 
+recapturar todo
+ 
+el instrumento;
+ 
+el flujo pasa por
+ 
+/establecim
+iento
+.
+15.1. Segunda plantilla: versiones del entorno
+Elemento
+Valor en este equipo
+Cómo se comprobó
+flutter --version
+flutter --version
+dart --version
+dart --version
+flutter_riverpod
+flutter pub deps | grep
+ 
+riverpod
+riverpod_annotation
+flutter pub deps | grep
+ 
+riverpod
+riverpod_generator
+flutter pub deps | grep
+ 
+riverpod
+build_runner
+flutter pub deps | grep
+ 
+build_runner
+drift
+ / 
+drift_dev
+flutter pub deps | grep
+ 
+drift
+
+===== PÃGINA 35 =====
+
+===== PÃGINA 36 =====
+UNIVERSIDAD ANDINA DEL CUSCO
+Facultad de Ingeniería y Arquitectura
+Escuela Profesional de Ingeniería de
+ 
+Sistemas
+Semana 12 · Guía de Aplicación 08 · Parte I · Gestión de estado con Riverpod
+Universidad Andina del Cusco · Facultad de Ingeniería y Arquitectura · Escuela Profesional de Ingeniería de Sistemas
+Guía de Aplicación 08 · Parte I · Semana 12 · SIS048 · 2026-II · Página 
+36
+16. Referencias
+Además de las referencias que el equipo cite por su cuenta, el informe debe incluir al menos:
+Rousselet, R. (2025). *Migrating from 2.0 to 3.0*. Riverpod. https://riverpod.dev/docs/3.0_migration
+Rousselet, R. (2025). *What's new in Riverpod 3.0*. Riverpod. https://riverpod.dev/docs/whats_new
+Rousselet, R. (2026). *About code generation*. Riverpod.
+ 
+https://riverpod.dev/docs/concepts/about_code_generation
+Rousselet, R. (2026). *Automatic disposal*. Riverpod.
+ 
+https://riverpod.dev/docs/concepts2/auto_dispose
+Rousselet, R. (2026). *Consumers*. Riverpod. https://riverpod.dev/docs/concepts2/consumers
+Rousselet, R. (2026). *DO/DON'T*. Riverpod. https://riverpod.dev/docs/root/do_dont
+Rousselet, R. (2026). *Family*. Riverpod. https://riverpod.dev/docs/concepts2/family
+Rousselet, R. (2026). *flutter_riverpod* (Versión 3.4.3) [Paquete de Flutter]. pub.dev.
+ 
+https://pub.dev/packages/flutter_riverpod
+Rousselet, R. (2026). *Notifier class*. En *riverpod 3.4.3 API reference*. pub.dev.
+ 
+https://pub.dev/documentation/riverpod/latest/riverpod/Notifier-class.html
+Rousselet, R. (2026). *Provider overrides*. Riverpod. https://riverpod.dev/docs/concepts2/overrides
+Rousselet, R. (2026). *ProviderObserver class*. En *riverpod 3.4.3 API reference*. pub.dev.
+ 
+https://pub.dev/documentation/riverpod/latest/riverpod/ProviderObserver-class.html
+Rousselet, R. (2026). *Providers*. Riverpod. https://riverpod.dev/docs/concepts2/providers
+Rousselet, R. (2026). *Refs*. Riverpod. https://riverpod.dev/docs/concepts2/refs
+Rousselet, R. (2026). *Riverpod for Provider users: Motivation*. Riverpod.
+ 
+https://riverpod.dev/docs/from_provider/motivation
+Rousselet, R. (2026). *Testing your providers*. Riverpod. https://riverpod.dev/docs/how_to/testing
+Universidad Andina del Cusco. (2026). *Sílabo de la asignatura SIS048 — Desarrollo de Software II,
+ 
+semestre 2026-II* (Rev. 4). Dirección de Desarrollo Académico.

@@ -1,0 +1,431 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"/><style>
+@page{size:A4;margin:2.4cm 2.2cm 2.4cm 2.2cm} body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#202020;line-height:1.15} h1{font-family:Calibri;font-size:15pt;color:#1F4E79;margin:15pt 0 8pt;page-break-after:avoid} h2{font-family:Calibri;font-size:12pt;color:#1F4E79;margin:11pt 0 5pt;page-break-after:avoid} p{margin:0 0 7pt} .caption{font-weight:bold;color:#1F4E79;margin:8pt 0 3pt} .note{font-size:9pt;color:#444} table{border-collapse:collapse;width:100%;font-family:Calibri;font-size:9pt;margin:5pt 0 9pt} th,td{border:1px solid #D9D9D9;padding:5pt 6pt;vertical-align:middle} th{background:#1F4E79;color:white;font-weight:bold} tr:nth-child(even) td{background:#F0F5FA} pre{font-family:Consolas,monospace;font-size:9pt;white-space:pre-wrap;word-wrap:break-word;line-height:1.05;margin:5pt 0 8pt} code{font-family:Consolas,monospace;font-size:9pt} .cover{text-align:center} .coverTitle{font-family:Calibri;font-size:19pt;font-weight:bold;color:#111;margin:26pt 0 8pt} .coverSub{font-size:14pt;color:#1F4E79;margin:8pt 0 22pt} .coverInfo{font-size:10pt} .draft{font-weight:bold;color:#1F4E79} .figure{text-align:center;margin:6pt 0 10pt} .annex{page-break-before:always} .pagebreak{page-break-after:always}</style></head><body>
+<div class="cover"><p style="font-size:15pt;font-weight:bold;color:#1F4E79">UNIVERSIDAD ANDINA DEL CUSCO</p><p>Facultad de IngenierÃ­a y Arquitectura<br/>Escuela Profesional de IngenierÃ­a de Sistemas</p><p class="coverTitle">INFORME TÃ‰CNICO SEMANA 12</p><p class="coverSub">GestiÃ³n de estado avanzada con Riverpod en ManosSeguras</p><p class="draft">BORRADOR PARA REVISIÃ“N DEL EQUIPO</p><p>Desarrollo de Software II Â· SIS048<br/>Unidad II Â· GuÃ­a de AplicaciÃ³n 08 Â· Parte I<br/>Semestre 2026-II Â· Ciclo VII</p><p style="margin-top:24pt;font-weight:bold">Integrantes</p><p>CARDENAS CARRASCO LEONARDO Â· cÃ³digo: Pendiente de completar<br/>QUISPE DAVIDA JOSE JOSE Â· cÃ³digo: Pendiente de completar<br/>VITORINO DURAN DAVIS SHUMAGER Â· cÃ³digo: Pendiente de completar<br/>YABAR LATORRE GONZALO YABAR Â· cÃ³digo: Pendiente de completar</p><p class="coverInfo">Roles y responsabilidades: propuesta por confirmar por el equipo.<br/>Repositorio: Pendiente de completar.<br/>Docente: Mtro. Ing. Yover Collantes Valer.</p><p style="margin-top:28pt">Cusco, PerÃº Â· 17 de octubre de 2026</p></div><div class="pagebreak"></div>
+<p class="draft">BORRADOR. Las evidencias C1â€“C4 estÃ¡n guardadas; faltan cÃ³digos, URL del repositorio, confirmaciÃ³n de roles y la versiÃ³n de Semana 11 para comparaciones histÃ³ricas.</p>
+<h1>1. Datos del equipo y del proyecto</h1>
+<p class="caption"><strong>Tabla 1.</strong> <em>Ficha del proyecto</em></p>
+<table>
+<tr><th>Campo</th><th>Valor</th></tr>
+<tr><td>Asignatura</td><td>SIS048 — Desarrollo de Software II</td></tr>
+<tr><td>Docente</td><td>Mtro. Ing. Yover Collantes Valer, seg&#250;n la plantilla suministrada</td></tr>
+<tr><td>Semestre acad&#233;mico</td><td>2026-II &#183; Ciclo VII</td></tr>
+<tr><td>Unidad / Semana</td><td>Unidad II &#183; Semana 12 &#183; Gu&#237;a de Aplicaci&#243;n 08 &#183; Parte I</td></tr>
+<tr><td>T&#237;tulo del proyecto</td><td>ManosSeguras: gesti&#243;n de estado avanzada con Riverpod</td></tr>
+<tr><td>Repositorio (URL y visibilidad)</td><td><strong>Pendiente de proporcionar.</strong> La carpeta recibida no contiene <code>.git</code>.</td></tr>
+<tr><td>Entorno de esta verificaci&#243;n</td><td>Windows NT 10.0.26200.0 &#183; Flutter 3.47.1 &#183; Dart 3.13.1</td></tr>
+<tr><td>Estado del informe</td><td>Borrador con pruebas autom&#225;ticas verificadas y C1–C4 guardadas; falta la edici&#243;n institucional</td></tr>
+</table>
+<p class="note"><em>Nota.</em> Las versiones proceden de <code>docs/evidencias_semana12/00_entorno.txt</code>. No se atribuyen a los equipos de otros integrantes.</p>
+<p class="caption"><strong>Tabla 2.</strong> <em>Integrantes y roles Scrum</em></p>
+<table>
+<tr><th>Apellidos y nombres</th><th>C&#243;digo</th><th>Rol propuesto</th><th>Responsabilidad propuesta, no actividad acreditada</th></tr>
+<tr><td>CARDENAS CARRASCO LEONARDO</td><td>Pendiente</td><td>Scrum Master y documentaci&#243;n</td><td>Coordinar pendientes, informe y sustentaci&#243;n.</td></tr>
+<tr><td>QUISPE DAVIDA JOSE JOSE</td><td>Pendiente</td><td>Responsable t&#233;cnico</td><td>Trabajar providers, integraci&#243;n con <code>get_it</code> y generaci&#243;n de c&#243;digo.</td></tr>
+<tr><td>VITORINO DURAN DAVIS SHUMAGER</td><td>Pendiente</td><td>Responsable de calidad</td><td>Verificar pruebas, an&#225;lisis est&#225;tico y evidencias de seguridad.</td></tr>
+<tr><td>YABAR LATORRE GONZALO YABAR</td><td>Pendiente</td><td>Product Owner y validaci&#243;n funcional</td><td>Validar captura, borrador, guardado y sesi&#243;n.</td></tr>
+</table>
+<p>Los roles y responsabilidades son la <strong>propuesta proporcionada para confirmaci&#243;n por el equipo</strong>; no acreditan tareas ya realizadas por cada integrante. Todos los c&#243;digos universitarios siguen pendientes. El archivo de origen ya estaba identificado como Semana 12; no se recibi&#243; un repositorio de la Semana 11 ni un historial de commits para demostrar qu&#233; cambios hizo cada persona.</p>
+<h1>2. Resumen ejecutivo</h1>
+<p>El proyecto recibido ya conten&#237;a tres <code>Notifier</code> para tema, captura y sesi&#243;n, con ocho providers puente que publicaban dependencias construidas por <code>get_it</code>. Esta revisi&#243;n a&#241;adi&#243; dos puentes, elimin&#243; llamadas directas a <code>getIt</code> de las pantallas y cerr&#243; riesgos de duplicaci&#243;n de auditor&#237;as y exposici&#243;n de datos en la traza y la b&#243;veda. El borrador sobrevive a la navegaci&#243;n; la sesi&#243;n conserva el almac&#233;n seguro, el descarte de tokens vencidos y una interfaz que muestra solo la huella. Las pantallas secundarias incorporan regreso expl&#237;cito a bienvenida o a su pantalla matriz sin descartar el borrador. La bater&#237;a pas&#243; de 135 pruebas aprobadas en el ZIP recibido a 140 en la versi&#243;n revisada, con una omitida en ambos casos. La cifra anterior a la Semana 12 no puede reconstruirse sin esa versi&#243;n. C1–C4 est&#225;n guardadas, pero falta su revisi&#243;n editorial e inserci&#243;n; tambi&#233;n quedan pendientes los c&#243;digos, la confirmaci&#243;n de roles y la comparaci&#243;n hist&#243;rica. <code>AsyncNotifier</code> y <code>AsyncValue</code> corresponden a la Semana 13.</p>
+<h1>3. Decisi&#243;n de arquitectura: por qu&#233; Riverpod</h1>
+<h2>3.1. El problema, con datos del propio c&#243;digo</h2>
+<p>El flujo de captura usa una lista de oportunidades, una acci&#243;n seleccionada, un correlativo, un indicador de guardado y la preferencia del &#250;ltimo establecimiento. Los comentarios del c&#243;digo recibido describen <strong>seis campos</strong> y <strong>cinco llamadas</strong> a <code>setState</code> en la versi&#243;n anterior. No se dispone del archivo de esa versi&#243;n; por ello esas cifras son una descripci&#243;n heredada, <strong>no una medici&#243;n independiente</strong>. S&#237; se comprob&#243; que la pantalla actual <code>pantalla_oportunidades.dart</code> no contiene ninguna llamada ejecutable a <code>setState</code> y que sus reglas de negocio viven en <code>Captura</code>.</p>
+<p>Con estado limitado al <code>State</code> de la ruta, la bienvenida no podr&#237;a leer directamente el borrador en curso. En el c&#243;digo actual ambas pantallas observan <code>capturaProvider</code>; la sesi&#243;n y el tema siguen el mismo patr&#243;n. La prueba <code>es keepAlive: sin oyentes el borrador sigue ah&#237;</code> comprueba la conservaci&#243;n del borrador dentro del contenedor despu&#233;s de cancelar una suscripci&#243;n. C1 y C2 ya est&#225;n guardadas como evidencia visual del recorrido, aunque siguen sin insertarse en la edici&#243;n paginada. La distinci&#243;n entre estado local y estado compartido se apoya en la gu&#237;a oficial de Flutter (Google, s. f.) y en la recomendaci&#243;n de Riverpod de dejar los controladores dentro de los widgets (Rousselet, 2026b).</p>
+<p>La l&#243;gica de correlativo y guardado puede probarse sin montar la interfaz mediante <code>ProviderContainer.test()</code> y sustituciones de los repositorios. Las pruebas de widget siguen siendo necesarias para confirmar que la pantalla reacciona y que nunca publica el token. Este reparto coincide con el m&#233;todo de pruebas documentado por Riverpod (Rousselet, 2026e). No se dispone de una suite anterior a la Semana 12 con la cual medir cu&#225;nto costaba probar las mismas reglas.</p>
+<h2>3.2. Alternativas evaluadas</h2>
+<p class="caption"><strong>Tabla 3.</strong> <em>Alternativas para el estado compartido</em></p>
+<table>
+<tr><th>Alternativa</th><th>Ventaja</th><th>Inconveniente en este proyecto</th><th>&#191;Se eligi&#243;?</th></tr>
+<tr><td><code>StatefulWidget</code> y <code>setState</code></td><td>Directo para formularios, carga de una ruta y controladores locales.</td><td>El borrador y la sesi&#243;n necesitan observarse desde m&#225;s de una ruta; compartirlos exigir&#237;a elevar el estado o construir un mecanismo propio.</td><td>S&#237;, solo para estado ef&#237;mero de pantallas no migradas.</td></tr>
+<tr><td><code>package:provider</code></td><td>Integraci&#243;n conocida con el &#225;rbol de Flutter.</td><td>La ubicaci&#243;n del provider en el &#225;rbol entra en las pruebas y los cambios de rutas; Riverpod documenta diferencias de alcance y de errores por provider no encontrado (Rousselet, 2026c).</td><td>No.</td></tr>
+<tr><td><code>get_it</code> con <code>ValueNotifier</code></td><td>Reutiliza el contenedor de la Semana 9 y conserva una API simple.</td><td>Exige gestionar manualmente la suscripci&#243;n de cada pantalla y deja el estado de negocio en objetos construidos fuera del contenedor reactivo.</td><td>No para el estado; <code>get_it</code> sigue construyendo dependencias.</td></tr>
+<tr><td>Riverpod con <code>Notifier</code> y providers puente</td><td>Estado compartido, ciclo de vida expl&#237;cito y overrides para pruebas sin UI.</td><td>Requiere archivos generados, <code>ProviderContainer</code> y una frontera clara entre estado de negocio y estado ef&#237;mero.</td><td>S&#237;.</td></tr>
+</table>
+<p class="note"><em>Nota.</em> La comparaci&#243;n describe el efecto de cada opci&#243;n sobre este c&#243;digo; no atribuye ventajas de rendimiento sin medici&#243;n. La motivaci&#243;n oficial de Riverpod compara sus modelos de alcance y pruebas con <code>provider</code> (Rousselet, 2026c).</p>
+<h2>3.3. Decisi&#243;n y consecuencias</h2>
+<p>Se conserv&#243; <code>get_it</code> como composici&#243;n de objetos. Los diez providers simples solo obtienen instancias de ese grafo; no crean una segunda base de datos ni un segundo repositorio. Los tres <code>Notifier</code> gestionan los valores que cambian y las pantallas los leen con <code>ref.watch</code> o ejecutan acciones con <code>ref.read</code>. La documentaci&#243;n de Riverpod define <code>NotifierProvider</code> como la variante mutable y permite sustituir providers en pruebas (Rousselet, 2026d; Rousselet, 2026e).</p>
+<p>La ganancia demostrada en esta entrega es la prueba aislada de correlativos, borrador, sesi&#243;n y seguridad, junto con la lectura compartida del borrador y la sesi&#243;n desde bienvenida. El costo aceptado es mantener <code>build_runner</code>, los tres <code>.g.dart</code> y el contenedor en el arranque. La generaci&#243;n usa <code>@Riverpod(keepAlive: true)</code> para los tres estados persistentes durante la vida de la aplicaci&#243;n. En providers generados, <code>autoDispose</code> es el valor por defecto; <code>keepAlive</code> evita destruir el borrador cuando la ruta deja de escucharlo (Rousselet, 2026a). Este argumento es funcional; no implica que el borrador se guarde en disco entre cierres de la aplicaci&#243;n.</p>
+<h1>4. Dise&#241;o de la capa de estado</h1>
+<h2>4.1. Diagrama del grafo de estado</h2>
+<p class="caption"><strong>Figura 1.</strong> <em>Grafo de construcci&#243;n, publicaci&#243;n y observaci&#243;n del estado</em></p>
+<div class="figure"><img alt="Diagrama del grafo de estado" src="file:///C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/docs/evidencias_semana12/word_qa/diagrama_estado.png" width="620"/></div>
+<p class="note"><em>Nota.</em> Elaboraci&#243;n a partir de <code>presentation/di.dart</code>, <code>dependencias_providers.dart</code>, los tres <code>Notifier</code> y las pantallas revisadas el 17 de octubre de 2026. La figura es un esquema de c&#243;digo, no una medici&#243;n de dependencias en ejecuci&#243;n.</p>
+<p><code>main()</code> configura <code>get_it</code> antes de crear el <code>ProviderContainer</code>; luego carga el tema y restaura la sesi&#243;n antes del primer fotograma y finalmente entrega el contenedor a <code>UncontrolledProviderScope</code>. Esto conserva la secuencia de arranque de las semanas anteriores. Los providers puente cachean la referencia que obtienen de <code>get_it</code>, mientras los <code>Notifier</code> conservan las reglas de cambio. El acceso directo a <code>getIt</code> se retir&#243; de los archivos de pantallas: <code>rg -n &#39;getIt&lt;&#39; lib/presentation/pantallas</code> no devolvi&#243; coincidencias despu&#233;s de la revisi&#243;n.</p>
+<p class="caption">Figura 1. Evidencia C1 de la aplicaciÃ³n ejecutada</p><div class="figure"><img alt="EVIDENCIA_C1" src="file:///C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/docs/evidencias_semana12/capturas/C1_bienvenida_borrador.png" width="525"/></div>
+<h2>4.2. Inventario de providers</h2>
+<p class="caption"><strong>Tabla 4.</strong> <em>Providers publicados y &#225;mbito</em></p>
+<table>
+<tr><th>Provider</th><th>Tipo</th><th>Estado o valor que expone</th><th>&#193;mbito</th><th>Justificaci&#243;n del &#225;mbito</th><th>Qui&#233;n lo observa o lee</th></tr>
+<tr><td><code>auditoriaRepositoryProvider</code></td><td><code>Provider</code> simple</td><td><code>AuditoriaRepository</code></td><td>Contenedor</td><td>Publica el singleton ya construido.</td><td>Captura, listado y detalle.</td></tr>
+<tr><td><code>indicadorRepositoryProvider</code></td><td><code>Provider</code> simple</td><td><code>IndicadorRepository</code></td><td>Contenedor</td><td>Reutiliza la cach&#233; y el repositorio offline first.</td><td>Diagn&#243;stico e indicadores.</td></tr>
+<tr><td><code>preferenciasRepositoryProvider</code></td><td><code>Provider</code> simple</td><td><code>PreferenciasRepository</code></td><td>Contenedor</td><td>Una referencia al repositorio de preferencias.</td><td>Tema, captura y diagn&#243;stico.</td></tr>
+<tr><td><code>sesionRepositoryProvider</code></td><td><code>Provider</code> simple</td><td><code>SesionRepository</code></td><td>Contenedor</td><td>Mantiene una implementaci&#243;n &#250;nica del almac&#233;n de sesi&#243;n.</td><td>Sesi&#243;n y b&#243;veda.</td></tr>
+<tr><td><code>almacenSeguroProvider</code></td><td><code>Provider</code> simple</td><td><code>AlmacenSeguro</code></td><td>Contenedor</td><td>Publica el adaptador configurado en <code>get_it</code>.</td><td>B&#243;veda.</td></tr>
+<tr><td><code>generadorTokenProvider</code></td><td><code>Provider</code> simple</td><td><code>GeneradorTokenSimulado</code></td><td>Contenedor</td><td>Servicio inyectable y sustituible en pruebas.</td><td>Sesi&#243;n.</td></tr>
+<tr><td><code>directorioUsuariosProvider</code></td><td><code>Provider</code> simple</td><td><code>DirectorioUsuariosSimulado</code></td><td>Contenedor</td><td>Servicio inyectable y sustituible en pruebas.</td><td>Sesi&#243;n y formulario.</td></tr>
+<tr><td><code>preferenciasDaoProvider</code></td><td><code>Provider</code> simple</td><td><code>PreferenciasDao</code></td><td>Contenedor</td><td>La b&#243;veda reutiliza el DAO de <code>get_it</code>.</td><td>B&#243;veda.</td></tr>
+<tr><td><code>manosSegurasDbProvider</code></td><td><code>Provider</code> simple</td><td><code>ManosSegurasDb</code></td><td>Contenedor</td><td>Evita abrir otra conexi&#243;n SQLite.</td><td>Diagn&#243;stico.</td></tr>
+<tr><td><code>sembradorDatosProvider</code></td><td><code>Provider</code> simple</td><td><code>SembradorDatos</code></td><td>Contenedor</td><td>Publica el servicio ya compuesto.</td><td>Diagn&#243;stico.</td></tr>
+<tr><td><code>temaProvider</code></td><td><code>Notifier</code> generado</td><td><code>ThemeMode</code></td><td><code>keepAlive</code></td><td>La preferencia es de aplicaci&#243;n y se consulta desde la ra&#237;z.</td><td>Ra&#237;z y bienvenida.</td></tr>
+<tr><td><code>capturaProvider</code></td><td><code>Notifier</code> generado</td><td><code>EstadoCaptura</code></td><td><code>keepAlive</code></td><td>El borrador debe sobrevivir a la navegaci&#243;n.</td><td>Captura y bienvenida.</td></tr>
+<tr><td><code>sesionCtrlProvider</code></td><td><code>Notifier</code> generado</td><td><code>EstadoSesion</code></td><td><code>keepAlive</code></td><td>La sesi&#243;n se comparte entre rutas.</td><td>Sesi&#243;n y bienvenida.</td></tr>
+</table>
+<p class="note"><em>Nota.</em> Los diez providers simples est&#225;n escritos a mano; los tres <code>NotifierProvider</code> son generados. No hay <code>AsyncNotifier</code> ni <code>AsyncValue</code> en la capa nueva de Semana 12.</p>
+<h2>4.3. Matriz de decisiones de estado</h2>
+<p class="caption"><strong>Tabla 5.</strong> <em>Frontera entre estado compartido y estado del widget</em></p>
+<table>
+<tr><th>Estado</th><th>&#191;Compartido?</th><th>&#191;Sobrevive a la navegaci&#243;n?</th><th>&#191;Tiene reglas comprobables?</th><th>Destino</th><th>&#193;mbito</th><th>Justificaci&#243;n</th></tr>
+<tr><td>Tema</td><td>S&#237;</td><td>S&#237;</td><td>S&#237;, persistencia y alternancia</td><td><code>Tema</code></td><td><code>keepAlive</code></td><td>Es una preferencia global; la ra&#237;z la observa.</td></tr>
+<tr><td>Borrador de oportunidades y acci&#243;n seleccionada</td><td>S&#237;</td><td>S&#237;</td><td>S&#237;, correlativo, eliminaci&#243;n, guardado y fallo</td><td><code>Captura</code></td><td><code>keepAlive</code></td><td>Bienvenida y captura muestran el mismo trabajo en curso.</td></tr>
+<tr><td>Sesi&#243;n, progreso y &#250;ltimo fallo</td><td>S&#237;</td><td>S&#237;</td><td>S&#237;, reentrada, expiraci&#243;n y cierre</td><td><code>SesionCtrl</code></td><td><code>keepAlive</code></td><td>Varias rutas necesitan el estado vigente.</td></tr>
+<tr><td>&#218;ltimo establecimiento</td><td>S&#237;</td><td>S&#237; dentro de la aplicaci&#243;n; adem&#225;s hay preferencia en SQLite</td><td>S&#237;, recuperaci&#243;n tras guardado</td><td><code>Captura</code></td><td><code>keepAlive</code></td><td>Se muestra en bienvenida y captura; el c&#243;digo de preferencia ya exist&#237;a.</td></tr>
+<tr><td>Controladores de documento y clave</td><td>No</td><td>No</td><td>Validaci&#243;n local del formulario</td><td><code>State</code> de sesi&#243;n</td><td>Vida de la ruta</td><td><code>TextEditingController</code> es estado ef&#237;mero; se elimina al desmontar.</td></tr>
+<tr><td><code>GlobalKey&lt;FormState&gt;</code></td><td>No</td><td>No</td><td>Validaci&#243;n local</td><td><code>State</code> de sesi&#243;n</td><td>Vida de la ruta</td><td>Pertenece al formulario, no al negocio compartido.</td></tr>
+<tr><td><code>Future</code> de detalle, diagn&#243;stico e indicadores</td><td>No</td><td>No</td><td>Carga por ruta; migraci&#243;n as&#237;ncrona futura</td><td><code>State</code> + <code>FutureBuilder</code></td><td>Vida de la ruta</td><td>No se adelanta <code>AsyncNotifier</code> de Semana 13.</td></tr>
+<tr><td>Indicador de recarga y experimento de b&#243;veda</td><td>No</td><td>No</td><td>Operaci&#243;n de UI local</td><td><code>State</code> de cada pantalla</td><td>Vida de la ruta</td><td>No se consulta desde otras rutas.</td></tr>
+</table>
+<p class="note"><em>Nota.</em> La matriz adapta el &#167;15 de la gu&#237;a suministrada. Flutter y Riverpod distinguen estado de aplicaci&#243;n y estado ef&#237;mero con un criterio funcional, no por el tipo de variable (Google, s. f.; Rousselet, 2026b).</p>
+<h1>5. Providers simples y generaci&#243;n de c&#243;digo</h1>
+<h2>5.1. El puente de dependencias</h2>
+<p>El puente no construye objetos. Por ejemplo, el repositorio de auditor&#237;as se publica as&#237;:</p>
+<pre>final Provider&lt;AuditoriaRepository&gt; auditoriaRepositoryProvider =
+    Provider&lt;AuditoriaRepository&gt;(
+  (Ref ref) =&gt; getIt&lt;AuditoriaRepository&gt;(),
+  name: &#39;auditoriaRepository&#39;,
+);</pre>
+<p>La revisi&#243;n a&#241;adi&#243; <code>manosSegurasDbProvider</code> y <code>sembradorDatosProvider</code>, y cambi&#243; las pantallas que todav&#237;a le&#237;an <code>getIt</code> para que consuman estos puentes. Los <code>FutureBuilder</code> y <code>StreamBuilder</code> de las rutas anteriores conservaron su funcionamiento. El criterio de la plantilla queda comprobado mediante la siguiente consulta de texto:</p>
+<pre>&gt; rg -n &#39;getIt&lt;&#39; lib/presentation/pantallas
+Sin coincidencias (c&#243;digo de salida 1 de rg).</pre>
+<h2>5.2. Configuraci&#243;n de la generaci&#243;n de c&#243;digo</h2>
+<p class="caption"><strong>Tabla 6.</strong> <em>Dependencias resueltas en este entorno</em></p>
+<table>
+<tr><th>Paquete</th><th>Versi&#243;n resuelta</th><th>Fuente de comprobaci&#243;n</th></tr>
+<tr><td><code>flutter_riverpod</code> / <code>riverpod</code></td><td>3.4.3 / 3.4.3</td><td><code>flutter pub deps --style=compact</code></td></tr>
+<tr><td><code>riverpod_annotation</code></td><td>4.0.7</td><td>Mismo comando</td></tr>
+<tr><td><code>riverpod_generator</code></td><td>4.0.9</td><td>Mismo comando</td></tr>
+<tr><td><code>build_runner</code></td><td>2.15.1</td><td>Mismo comando</td></tr>
+<tr><td><code>drift</code> / <code>drift_dev</code></td><td>2.34.4 / 2.35.1</td><td>Mismo comando</td></tr>
+<tr><td><code>flutter_secure_storage</code></td><td>11.2.0</td><td>Mismo comando</td></tr>
+<tr><td><code>riverpod_lint</code></td><td>No declarado</td><td><code>pubspec.yaml</code> y resoluci&#243;n actual</td></tr>
+</table>
+<p>La ejecuci&#243;n final de <code>dart run build_runner build</code> termin&#243; con <code>Built with build_runner/aot in 8s; wrote 90 outputs.</code> Esa cifra es del trabajo informado por <code>build_runner</code> en una ejecuci&#243;n incremental; <strong>no</strong> significa que se hayan modificado 90 archivos versionados. La ejecuci&#243;n inicial, sobre el ZIP recibido, inform&#243; 156 outputs. La salida &#237;ntegra se conserva en <code>12_build_runner_final.txt</code> y <code>02_build_runner.txt</code>.</p>
+<pre>&gt; flutter pub deps --style=compact | [filtrado por paquetes relevantes]
+flutter_riverpod 3.4.3
+riverpod_annotation 4.0.7
+riverpod_generator 4.0.9
+riverpod 3.4.3
+build_runner 2.15.1</pre>
+<p>La tabla reproduce los n&#250;meros resueltos por el comando; la salida literal completa est&#225; en <code>docs/evidencias_semana12/05_flutter_pub_deps.txt</code>. No se deduce la versi&#243;n desde un rango de <code>pubspec.yaml</code>.</p>
+<h2>5.3. Decisi&#243;n sobre el c&#243;digo generado</h2>
+<p class="caption"><strong>Tabla 7.</strong> <em>Decisi&#243;n sobre los archivos <code>.g.dart</code></em></p>
+<table>
+<tr><th>Elemento</th><th>Desarrollo del equipo</th></tr>
+<tr><td>Archivos que se conservan</td><td><code>tema_provider.g.dart</code>, <code>captura_provider.g.dart</code> y <code>sesion_provider.g.dart</code>.</td></tr>
+<tr><td>Regla de <code>.gitignore</code></td><td><code>!lib/presentation/providers/*.g.dart</code> permite incluirlos.</td></tr>
+<tr><td>Motivo</td><td>Sin ellos, los <code>part</code> de cada provider quedar&#237;an sin destino y el an&#225;lisis fallar&#237;a con <code>Target of URI doesn&#39;t exist</code>.</td></tr>
+<tr><td>Argumento contrario</td><td>Omitir generados reduce diffs, pero obliga a cada clon a ejecutar el generador antes de analizar o compilar.</td></tr>
+<tr><td>Estado verificable aqu&#237;</td><td>Los tres archivos existen y <code>build_runner</code> concluy&#243;. <code>captura_provider.g.dart</code> cambi&#243; respecto del ZIP inicial; los otros dos y el archivo generado de drift conservaron su SHA-256.</td></tr>
+<tr><td>L&#237;mite</td><td>La carpeta no contiene <code>.git</code>: a&#250;n no puede afirmarse que esos archivos est&#233;n en un commit remoto.</td></tr>
+</table>
+<p class="note"><em>Nota.</em> La generaci&#243;n de c&#243;digo y <code>keepAlive</code> se documentan en la fuente oficial de Riverpod (Rousselet, 2026a). El manifiesto de hashes inicial permite revisar qu&#233; archivos cambiaron en esta sesi&#243;n.</p>
+<h1>6. Migraci&#243;n de la captura (setState → Notifier)</h1>
+<h2>6.1. Inventario del estado anterior</h2>
+<p class="caption"><strong>Tabla 8.</strong> <em>Campos descritos para la captura anterior</em></p>
+<table>
+<tr><th>Campo antes</th><th>Tipo</th><th>&#191;Negocio o ef&#237;mero?</th><th>Destino</th><th>Justificaci&#243;n</th></tr>
+<tr><td><code>_oportunidades</code></td><td>Lista</td><td>Negocio</td><td><code>EstadoCaptura.oportunidades</code></td><td>Es el borrador compartido.</td></tr>
+<tr><td><code>_siguienteNumero</code></td><td>Entero</td><td>Negocio</td><td><code>EstadoCaptura.siguienteNumero</code></td><td>El correlativo no depende de la posici&#243;n de la fila.</td></tr>
+<tr><td><code>_accionSeleccionada</code></td><td><code>Accion</code></td><td>Parte del borrador</td><td><code>EstadoCaptura.accionSeleccionada</code></td><td>Define la siguiente oportunidad capturada.</td></tr>
+<tr><td><code>_guardando</code></td><td>Booleano</td><td>Operaci&#243;n de negocio</td><td><code>EstadoCaptura.guardando</code></td><td>Bloquea el guardado simult&#225;neo y comunica progreso.</td></tr>
+<tr><td><code>_ultimoEstablecimiento</code></td><td>Texto opcional</td><td>Dato compartido</td><td><code>EstadoCaptura.ultimoEstablecimiento</code></td><td>Se consulta tambi&#233;n desde bienvenida.</td></tr>
+<tr><td><code>_cargandoPreferencia</code></td><td>Booleano</td><td>Estado de recuperaci&#243;n</td><td><code>EstadoCaptura.cargandoPreferencia</code></td><td>Impide presentar un valor incompleto durante la lectura.</td></tr>
+</table>
+<p class="note"><em>Nota.</em> Los nombres provienen del comentario del archivo actual. No se recibi&#243; el archivo ejecutable de la Semana 11 para comprobar sus tipos exactos, su n&#250;mero de llamadas o sus l&#237;neas originales. En la pantalla de captura actual no quedan campos de negocio en un <code>State</code>.</p>
+<h2>6.2. Tabla &#171;antes / despu&#233;s&#187;</h2>
+<p class="caption"><strong>Tabla 9.</strong> <em>Correspondencia de operaciones de captura</em></p>
+<table>
+<tr><th>Operaci&#243;n</th><th>L&#237;nea anterior</th><th>L&#237;nea nueva verificable</th><th>Estado de la comparaci&#243;n</th></tr>
+<tr><td>Agregar</td><td>No disponible en el ZIP recibido.</td><td><code>ref.read(capturaProvider.notifier).agregar()</code></td><td>La operaci&#243;n nueva se prueba sin UI; falta fuente anterior.</td></tr>
+<tr><td>Quitar</td><td>No disponible en el ZIP recibido.</td><td><code>ref.read(capturaProvider.notifier).quitar(numero)</code></td><td>La prueba confirma que no renumera.</td></tr>
+<tr><td>Seleccionar acci&#243;n</td><td>No disponible en el ZIP recibido.</td><td><code>ref.read(capturaProvider.notifier).seleccionarAccion(accion)</code></td><td>La selecci&#243;n es parte del borrador.</td></tr>
+<tr><td>Guardar</td><td>No disponible en el ZIP recibido.</td><td><code>ref.read(capturaProvider.notifier).guardar()</code></td><td>El notifier devuelve <code>ResultadoOperacion</code>; la pantalla decide el mensaje.</td></tr>
+<tr><td>Mostrar resumen</td><td>No disponible en el ZIP recibido.</td><td><code>ref.watch(capturaProvider)</code> y getters <code>cumplidas</code> / <code>porcentaje</code></td><td>El resumen se actualiza desde un &#250;nico estado.</td></tr>
+</table>
+<p>La actividad de comparaci&#243;n exigida por la plantilla queda <strong>parcial</strong> hasta recibir la versi&#243;n anterior. Los comentarios actuales contienen ejemplos did&#225;cticos de c&#243;digo antiguo, pero no se los trata como evidencia de un commit real. El caso de uso elegido para el anexo B es &#171;agregar, quitar y conservar un borrador al navegar&#187;.</p>
+<h2>6.3. El estado inmutable y el operador ==</h2>
+<p>El siguiente c&#243;digo reproduce la clase de estado revisada. El constructor copia la lista a una vista no modificable; por ello un consumidor no puede alterar silenciosamente el borrador y omitir una notificaci&#243;n. <code>OportunidadRegistro</code> ahora implementa igualdad por sus campos, de modo que <code>listEquals</code> compara el contenido y no solo la identidad de cada elemento. La prueba usa dos oportunidades distintas con los mismos valores y tambi&#233;n intenta modificar la lista desde fuera.</p>
+<pre>@immutable
+class EstadoCaptura {
+  EstadoCaptura({
+    List&lt;OportunidadRegistro&gt; oportunidades = const &lt;OportunidadRegistro&gt;[],
+    this.accionSeleccionada = Accion.friccionDeManos,
+    this.siguienteNumero = 1,
+    this.guardando = false,
+    this.cargandoPreferencia = true,
+    this.ultimoEstablecimiento,
+  }) : oportunidades = List&lt;OportunidadRegistro&gt;.unmodifiable(oportunidades);
+
+  final List&lt;OportunidadRegistro&gt; oportunidades;
+  final Accion accionSeleccionada;
+  final int siguienteNumero;
+  final bool guardando;
+  final bool cargandoPreferencia;
+  final String? ultimoEstablecimiento;
+
+  int get cumplidas =&gt;
+      oportunidades.where((OportunidadRegistro o) =&gt; o.cumplio).length;
+  int get porcentaje =&gt; oportunidades.isEmpty
+      ? 0
+      : ((cumplidas / oportunidades.length) * 100).round();
+  bool get hayDatos =&gt; oportunidades.isNotEmpty;
+
+  EstadoCaptura copyWith({
+    List&lt;OportunidadRegistro&gt;? oportunidades,
+    Accion? accionSeleccionada,
+    int? siguienteNumero,
+    bool? guardando,
+    bool? cargandoPreferencia,
+    String? ultimoEstablecimiento,
+  }) {
+    return EstadoCaptura(
+      oportunidades: oportunidades ?? this.oportunidades,
+      accionSeleccionada: accionSeleccionada ?? this.accionSeleccionada,
+      siguienteNumero: siguienteNumero ?? this.siguienteNumero,
+      guardando: guardando ?? this.guardando,
+      cargandoPreferencia: cargandoPreferencia ?? this.cargandoPreferencia,
+      ultimoEstablecimiento:
+          ultimoEstablecimiento ?? this.ultimoEstablecimiento,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is EstadoCaptura &amp;&amp;
+        listEquals(other.oportunidades, oportunidades) &amp;&amp;
+        other.accionSeleccionada == accionSeleccionada &amp;&amp;
+        other.siguienteNumero == siguienteNumero &amp;&amp;
+        other.guardando == guardando &amp;&amp;
+        other.cargandoPreferencia == cargandoPreferencia &amp;&amp;
+        other.ultimoEstablecimiento == ultimoEstablecimiento;
+  }
+
+  @override
+  int get hashCode =&gt; Object.hash(
+        Object.hashAll(oportunidades),
+        accionSeleccionada,
+        siguienteNumero,
+        guardando,
+        cargandoPreferencia,
+        ultimoEstablecimiento,
+      );
+
+  @override
+  String toString() =&gt;
+      &#39;EstadoCaptura(${oportunidades.length} oportunidades, &#39;
+      &#39;siguiente O-${siguienteNumero.toString().padLeft(2, &#39;0&#39;)}, &#39;
+      &#39;guardando: $guardando)&#39;;
+}</pre>
+<p>Riverpod 3 usa <code>==</code> para decidir si notifica cambios. Por eso una implementaci&#243;n superficial pod&#237;a notificar de m&#225;s o no detectar una mutaci&#243;n realizada dentro de la misma lista (Rousselet, 2025). La clase sustituye el estado completo cuando cambia y restringe la mutaci&#243;n exterior. No se midi&#243; todav&#237;a el n&#250;mero de reconstrucciones de widgets; la igualdad es una condici&#243;n de filtrado, no una cifra de rendimiento por s&#237; sola.</p>
+<h2>6.4. Pol&#237;tica ante el fallo del guardado</h2>
+<p>Si <code>AuditoriaRepository.guardar()</code> falla, <code>Captura.guardar()</code> devuelve <code>OperacionFallida</code>, apaga <code>guardando</code> y conserva las oportunidades. La prueba <code>guardar() informa el fallo y conserva el borrador</code> lo comprueba. La decisi&#243;n protege el trabajo del observador que a&#250;n no est&#225; en SQLite: descartarlo obligar&#237;a a repetir la captura.</p>
+<p>La revisi&#243;n detect&#243; un segundo caso: despu&#233;s de que la auditor&#237;a se guardara, pod&#237;a fallar &#250;nicamente la escritura de la preferencia auxiliar. Antes se devolv&#237;a un fallo y se reten&#237;a el borrador, lo cual pod&#237;a duplicar la auditor&#237;a al reintentar. Ahora ese fallo se registra con un mensaje gen&#233;rico, la operaci&#243;n principal retorna <code>OperacionOk</code> y el borrador se vac&#237;a. La prueba <code>fallo de preferencia no duplica una auditor&#237;a ya guardada</code> verifica la decisi&#243;n. Otra prueba comprueba que dos llamadas simult&#225;neas a <code>guardar()</code> no insertan dos auditor&#237;as.</p>
+<p>El borrador tiene <code>keepAlive</code> porque navegar desde captura a bienvenida o al cat&#225;logo no constituye una orden de descartarlo. La prueba sin oyentes cubre esta regla dentro del contenedor. El alcance es memoria del proceso; no se afirma persistencia del borrador al cerrar la aplicaci&#243;n. [INSERTAR EVIDENCIA C2: usar <code>docs/evidencias_semana12/capturas/C2_captura_oportunidades.png</code>; muestra oportunidades 01 y 03 tras quitar la 02, y el resumen.]</p>
+<h1>7. Migraci&#243;n de la sesi&#243;n</h1>
+<h2>7.1. El estado de la sesi&#243;n</h2>
+<p><code>Sesion?</code> por s&#237; solo distingue &#250;nicamente &#171;hay&#187; y &#171;no hay&#187; sesi&#243;n. La interfaz necesita adem&#225;s deshabilitar el bot&#243;n mientras una operaci&#243;n escribe en el almac&#233;n y comunicar un fallo sin declarar activa una sesi&#243;n que no pudo guardarse. <code>EstadoSesion</code> re&#250;ne <code>sesion</code>, <code>procesando</code> y <code>ultimoFallo</code>. Los <code>TextEditingController</code> y la clave del formulario permanecen en <code>ConsumerStatefulWidget</code>; Riverpod recomienda no mover ese estado ef&#237;mero a providers (Rousselet, 2026b).</p>
+<pre>@immutable
+class EstadoSesion {
+  const EstadoSesion({this.sesion, this.procesando = false, this.ultimoFallo});
+  final Sesion? sesion;
+  final bool procesando;
+  final String? ultimoFallo;
+
+  bool get haySesionActiva =&gt;
+      sesion != null &amp;&amp; sesion!.activaEn(DateTime.now());
+  bool get haySesion =&gt; sesion != null;
+
+  EstadoSesion copyWith({
+    Sesion? sesion,
+    bool? procesando,
+    String? ultimoFallo,
+    bool limpiarSesion = false,
+    bool limpiarFallo = false,
+  }) {
+    return EstadoSesion(
+      sesion: limpiarSesion ? null : (sesion ?? this.sesion),
+      procesando: procesando ?? this.procesando,
+      ultimoFallo: limpiarFallo ? null : (ultimoFallo ?? this.ultimoFallo),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =&gt;
+      identical(this, other) ||
+      other is EstadoSesion &amp;&amp;
+          other.sesion == sesion &amp;&amp;
+          other.procesando == procesando &amp;&amp;
+          other.ultimoFallo == ultimoFallo;
+  @override
+  int get hashCode =&gt; Object.hash(sesion, procesando, ultimoFallo);
+  @override
+  String toString() =&gt;
+      &#39;EstadoSesion(&#39;
+      &#39;sesion: ${sesion == null ? &#39;inactiva&#39; : &#39;activa&#39;}, &#39;
+      &#39;procesando: $procesando, conFallo: ${ultimoFallo != null})&#39;;
+}</pre>
+<p>El <code>toString()</code> de esta versi&#243;n solo comunica el estado operativo. La revisi&#243;n elimin&#243; el nombre de la persona y el texto del fallo de esa representaci&#243;n para que una traza accidental no exponga datos personales ni mensajes t&#233;cnicos. La entidad <code>Sesion</code> mantiene el token para cumplir la operaci&#243;n del repositorio, pero la pantalla publica &#250;nicamente <code>token.huella</code> y el tiempo restante.</p>
+<h2>7.2. La guarda de reentrada</h2>
+<p>Al comenzar <code>iniciar()</code>, el notifier comprueba <code>state.procesando</code> y lo cambia a <code>true</code> antes del primer <code>await</code>. Si otra pulsaci&#243;n llama a <code>iniciar()</code> mientras el primer guardado est&#225; pendiente, recibe <code>OperacionSinDatos</code> y no emite un segundo token. La prueba <code>iniciar() es reentrante-seguro: la segunda llamada no emite token</code> verifica el resultado. El control de reentrada es expl&#237;cito en esta semana; <code>AsyncValue</code> ser&#225; estudiado en la Semana 13, sin asumir que por s&#237; solo serialice operaciones concurrentes.</p>
+<h2>7.3. Conservaci&#243;n de las reglas de seguridad (Semana 11)</h2>
+<p class="caption"><strong>Tabla 10.</strong> <em>Reglas de seguridad y evidencia</em></p>
+<table>
+<tr><th>Regla de la Semana 11</th><th>&#191;Se conserva?</th><th>Evidencia</th></tr>
+<tr><td>El valor del token nunca se publica en la interfaz.</td><td>S&#237; en la suite actual.</td><td>Widget test <code>el valor del token NO se muestra en la pantalla</code>; la UI usa <code>descripcionToken</code> con huella.</td></tr>
+<tr><td>El token nunca se imprime en registros de depuraci&#243;n.</td><td>S&#237; en los caminos revisados.</td><td><code>RegistroDeProviders</code> registra solo nombres; prueba <code>el observador cuenta eventos sin registrar valores ni errores</code>.</td></tr>
+<tr><td><code>toString()</code> de los estados no vuelca datos sensibles.</td><td>S&#237; para <code>EstadoSesion</code> y <code>EstadoCaptura</code>.</td><td>Prueba de sesi&#243;n verifica que el texto no contiene valor del token ni nombre del usuario.</td></tr>
+<tr><td>Al cerrar sesi&#243;n se limpia el almac&#233;n seguro.</td><td>S&#237;.</td><td>Pruebas <code>cerrar() borra el almac&#233;n y el estado</code> y <code>cerrar sesi&#243;n vac&#237;a el almac&#233;n seguro</code>.</td></tr>
+<tr><td>Un token vencido se descarta y se limpia el almac&#233;n.</td><td>S&#237;.</td><td>Prueba <code>restaurar() descarta un token vencido y limpia el almac&#233;n</code>.</td></tr>
+<tr><td>La prueba de widget sobre token oculto sigue en verde.</td><td>S&#237;.</td><td>Aparece en <code>16_flutter_test_navegacion.txt</code>.</td></tr>
+</table>
+<p>La b&#243;veda conserva su experimento forense de la Semana 11, pero la interfaz ya no ofrece un interruptor para revelar el token de laboratorio. La fila se censura antes de entrar al estado que el widget muestra. Los mensajes del adaptador del almac&#233;n seguro no incluyen el texto crudo de una excepci&#243;n de plataforma. C3 est&#225; guardada y muestra la huella sin el valor del token; antes de insertarla conviene recortar el directorio simulado que aparece debajo de la tarjeta de sesi&#243;n. [INSERTAR EVIDENCIA C3: usar la captura guardada y conservar solo huella, documento enmascarado, rol y mecanismo; ocultar identificadores ajenos a esa evidencia.]</p>
+<h1>8. Pruebas y evidencias</h1>
+<h2>8.1. An&#225;lisis est&#225;tico</h2>
+<p>Salida literal final, conservada en <code>docs/evidencias_semana12/15_flutter_analyze_navegacion.txt</code>:</p>
+<pre>&gt; flutter analyze --fatal-infos
+Analyzing manos_seguras_semana12...
+No issues found! (ran in 1.8s)</pre>
+<p>El an&#225;lisis se repiti&#243; despu&#233;s de corregir cuatro imports sin uso detectados tras publicar los puentes en las pantallas. El registro intermedio con esos hallazgos tambi&#233;n se conserva; el resultado final anterior corresponde al &#225;rbol revisado.</p>
+<h2>8.2. Bater&#237;a de pruebas</h2>
+<p>&#218;ltima l&#237;nea literal de <code>flutter test --reporter expanded</code>, archivo <code>docs/evidencias_semana12/16_flutter_test_navegacion.txt</code>:</p>
+<pre>00:04 +140 ~1: All tests passed!</pre>
+<p>El contador <code>+140</code> indica 140 pruebas aprobadas y <code>~1</code> una prueba omitida. No son 141 aprobadas. La omitida es &#171;la versi&#243;n del esquema es 2 (Reto 4 completado)&#187;, que tiene un <code>skip</code> porque la migraci&#243;n v2 a&#250;n no se implement&#243;. Las ocho pruebas m&#237;nimas de la gu&#237;a aparecen en verde. El ZIP recibido produjo 135 aprobadas y una omitida antes de las cinco pruebas incorporadas a esta revisi&#243;n; esto <strong>no</strong> equivale al estado previo a la Semana 12.</p>
+<p class="caption"><strong>Tabla 11.</strong> <em>M&#233;tricas de la bater&#237;a</em></p>
+<table>
+<tr><th>M&#233;trica</th><th>Antes de la Semana 12</th><th>Despu&#233;s de la Semana 12, versi&#243;n revisada</th><th>Diferencia verificable</th></tr>
+<tr><td>Pruebas aprobadas</td><td>No verificable sin la versi&#243;n anterior.</td><td>140</td><td>+5 frente al ZIP recibido (135), no frente a Semana 11.</td></tr>
+<tr><td>Pruebas omitidas</td><td>No verificable.</td><td>1</td><td>0 frente al ZIP recibido.</td></tr>
+<tr><td>Pruebas que montan widgets</td><td>No verificable.</td><td>17 declaraciones <code>testWidgets</code></td><td>Una prueba nueva verifica el regreso al inicio desde establecimiento.</td></tr>
+<tr><td>Pruebas de los tres providers sin interfaz</td><td>No verificable.</td><td>32 declaraciones <code>test</code> en los tres archivos de provider</td><td>El ZIP recibido ya ten&#237;a 29; se a&#241;adieron 3 en esta revisi&#243;n.</td></tr>
+<tr><td>Prueba del observador sin interfaz</td><td>No verificable.</td><td>1</td><td>+1 frente al ZIP recibido.</td></tr>
+<tr><td>Archivos de prueba nuevos frente al ZIP recibido</td><td>No verificable.</td><td><code>observador_riverpod_test.dart</code> y <code>widget_test.dart</code></td><td>+2 archivos frente al ZIP recibido.</td></tr>
+</table>
+<p class="note"><em>Nota.</em> Las cifras de declaraciones proceden de una b&#250;squeda en los archivos de prueba; el resultado autoritativo de ejecuci&#243;n es la salida de Flutter. El total pas&#243; de 135 a 140 por dos pruebas de guardado, una de lista inmutable, una del observador y una de navegaci&#243;n.</p>
+<h2>8.3. Pruebas nuevas y reglas que verifican</h2>
+<p class="caption"><strong>Tabla 12.</strong> <em>Pruebas m&#237;nimas de la gu&#237;a y pruebas de esta revisi&#243;n</em></p>
+<table>
+<tr><th>Archivo</th><th>Nombre de la prueba</th><th>Regla que verifica</th><th>&#191;Monta widgets?</th></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>agregar() a&#241;ade la oportunidad con el n&#250;mero correlativo</code></td><td>Los n&#250;meros crecen al agregar.</td><td>No</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>quitar() elimina por n&#250;mero sin renumerar el resto</code></td><td>Borrar no reescribe identificadores.</td><td>No</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>guardar() persiste la auditor&#237;a y vac&#237;a el borrador</code></td><td>&#201;xito confirma persistencia y limpia.</td><td>No</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>guardar() informa el fallo y conserva el borrador</code></td><td>Fallo principal protege el trabajo.</td><td>No</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>es keepAlive: sin oyentes el borrador sigue ah&#237;</code></td><td>Navegar no destruye el borrador.</td><td>No</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>dos estados iguales son == y comparten hashCode</code></td><td>Igualdad consistente del estado.</td><td>No</td></tr>
+<tr><td><code>sesion_provider_test.dart</code></td><td><code>iniciar() es reentrante-seguro: la segunda llamada no emite token</code></td><td>Un doble inicio no emite dos tokens.</td><td>No</td></tr>
+<tr><td><code>sesion_provider_test.dart</code></td><td><code>restaurar() descarta un token vencido y limpia el almac&#233;n</code></td><td>La sesi&#243;n caducada se descarta.</td><td>No</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>fallo de preferencia no duplica una auditor&#237;a ya guardada</code></td><td>&#201;xito principal no se revierte por preferencia auxiliar.</td><td>No; a&#241;adida en esta revisi&#243;n.</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>dos guardados simult&#225;neos no duplican la auditor&#237;a</code></td><td>Una llamada concurrente no inserta de nuevo.</td><td>No; a&#241;adida en esta revisi&#243;n.</td></tr>
+<tr><td><code>captura_provider_test.dart</code></td><td><code>la lista del borrador no admite cambios desde fuera</code></td><td>La lista se copia y queda no modificable.</td><td>No; a&#241;adida en esta revisi&#243;n.</td></tr>
+<tr><td><code>observador_riverpod_test.dart</code></td><td><code>el observador cuenta eventos sin registrar valores ni errores</code></td><td>La traza no revela valores o fallos crudos.</td><td>No; a&#241;adida en esta revisi&#243;n.</td></tr>
+<tr><td><code>widget_test.dart</code></td><td><code>el bot&#243;n de regreso vuelve de establecimiento al inicio</code></td><td>El <code>leading</code> navega a bienvenida desde una ruta principal.</td><td>S&#237;; a&#241;adida tras la revisi&#243;n de navegaci&#243;n.</td></tr>
+<tr><td><code>pantalla_sesion_test.dart</code></td><td><code>el valor del token NO se muestra en la pantalla</code></td><td>La interfaz no incluye el valor del token.</td><td>S&#237;; prueba conservada.</td></tr>
+</table>
+<p>Se mantienen adem&#225;s las pruebas de dominio, persistencia, migraci&#243;n v1 y evidencia forense de la Semana 11. La ejecuci&#243;n autom&#225;tica no sustituye las capturas de la interfaz ejecutada: estas se solicitan en el anexo C.</p>
+<h1>9. Reconstrucciones y rendimiento</h1>
+<p>La igualdad de <code>EstadoCaptura</code> y <code>EstadoSesion</code> permite que Riverpod 3 filtre notificaciones cuando el valor nuevo equivale al anterior (Rousselet, 2025). <code>EstadoCaptura</code> copia su lista y compara oportunidades por valor; esto evita que un cambio externo silencioso invalide el contrato de comparaci&#243;n. La prueba demuestra igualdad y <code>hashCode</code>, pero no cuenta reconstrucciones reales de widgets.</p>
+<p>No se us&#243; <code>select</code>. Las pantallas actuales observan estados peque&#241;os y no existe un perfil de reconstrucciones que justifique introducir selecci&#243;n por campo. Sin esa medici&#243;n, afirmar una mejora de cuadros por segundo o de latencia ser&#237;a especulativo.</p>
+<p>Riverpod 3 puede pausar listeners de widgets fuera de vista, seg&#250;n la documentaci&#243;n oficial (Rousselet, 2025). En esta aplicaci&#243;n la captura y la sesi&#243;n siguen conservadas por <code>keepAlive</code>; la pausa puede evitar actividad de listeners invisibles, pero no destruye el borrador ni la sesi&#243;n. No se instrument&#243; una ruta para medir el impacto en energ&#237;a, CPU o fotogramas.</p>
+<p><code>RegistroDeProviders</code> cuenta creaciones, actualizaciones, destrucciones y fallos. La prueba comprueba que sus contadores cambian y que la traza no incluye datos sensibles. <strong>Un evento de provider no equivale a una reconstrucci&#243;n de widget.</strong> C4 est&#225; guardada y muestra dos actualizaciones de providers; debe recortarse la l&#237;nea de recarga de Flutter antes de insertarla. La imagen no muestra una medici&#243;n de reconstrucciones ni los valores de los contadores. [INSERTAR EVIDENCIA C4: usar la captura guardada y dejar solo las l&#237;neas <code>[riverpod]</code> sin rutas personales ni valores.]</p>
+<h1>10. Alcance: qu&#233; no se migr&#243; y por qu&#233;</h1>
+<p class="caption"><strong>Tabla 13.</strong> <em>Alcance por pantalla</em></p>
+<table>
+<tr><th>Pantalla / archivo</th><th>&#191;Migrada?</th><th>Motivo y estado actual</th><th>&#191;Cu&#225;ndo se migrar&#225;?</th></tr>
+<tr><td><code>pantalla_bienvenida.dart</code></td><td>S&#237;</td><td><code>ConsumerWidget</code> observa tema, borrador y sesi&#243;n.</td><td>Sin migraci&#243;n pendiente en Semana 12.</td></tr>
+<tr><td><code>pantalla_oportunidades.dart</code></td><td>S&#237;</td><td>La l&#243;gica de captura est&#225; en <code>Captura</code>; cero llamadas ejecutables a <code>setState</code>.</td><td>Sin migraci&#243;n pendiente en Semana 12.</td></tr>
+<tr><td><code>pantalla_sesion.dart</code></td><td>S&#237;</td><td><code>ConsumerStatefulWidget</code> observa sesi&#243;n y conserva controladores locales.</td><td>El tratamiento as&#237;ncrono se revisar&#225; en Semana 13.</td></tr>
+<tr><td><code>pantalla_establecimiento.dart</code></td><td>No aplica</td><td>Presentaci&#243;n est&#225;tica sin estado de negocio propio.</td><td>Sin necesidad identificada.</td></tr>
+<tr><td><code>pantalla_auditorias.dart</code></td><td>Parcial</td><td>Consume el puente de repositorio, pero conserva <code>StreamBuilder</code> de la lista.</td><td>Evaluar <code>StreamNotifier</code> cuando corresponda al temario.</td></tr>
+<tr><td><code>pantalla_auditoria_detalle.dart</code></td><td>Parcial</td><td>Consume puente; carga por ID con <code>FutureBuilder</code> local.</td><td>Evaluar estado as&#237;ncrono en Semana 13.</td></tr>
+<tr><td><code>pantalla_diagnostico.dart</code></td><td>Parcial</td><td>Consume puentes de base, repositorios y sembrador; conserva <code>Future</code> y recarga local.</td><td>Evaluar estado as&#237;ncrono en Semana 13.</td></tr>
+<tr><td><code>pantalla_indicadores.dart</code></td><td>Parcial</td><td>Consume puente; la consulta offline first sigue con <code>FutureBuilder</code>.</td><td>Evaluar estado as&#237;ncrono en Semana 13.</td></tr>
+<tr><td><code>pantalla_indicador_detalle.dart</code></td><td>Parcial</td><td>Consume puente; la lectura de cach&#233; por a&#241;o sigue local.</td><td>Considerar <code>family</code> y carga as&#237;ncrona en Semana 13.</td></tr>
+<tr><td><code>pantalla_boveda.dart</code></td><td>Parcial</td><td>Consume puentes; el experimento forense y su progreso son locales a la ruta.</td><td>Conservar local salvo nuevo requisito compartido.</td></tr>
+</table>
+<p>Esta revisi&#243;n retir&#243; las llamadas directas a <code>getIt</code> de las pantallas sin convertir por adelantado todos los <code>FutureBuilder</code> y <code>StreamBuilder</code>. Los <code>setState</code> restantes est&#225;n en rutas con recarga o experimento local; deben evaluarse con las reglas de la Semana 13 y con pruebas antes de moverlos. La clase anterior de tema y el antiguo gestor de sesi&#243;n no aparecen como fuentes de estado ejecutables. Tampoco se a&#241;adi&#243; persistencia offline de Riverpod: el borrador vive en memoria y las auditor&#237;as persisten mediante drift.</p>
+<h1>11. Conclusiones y trabajo futuro</h1>
+<p>La regla m&#225;s concreta que demuestra esta entrega es que un borrador de auditor&#237;a puede ser compartido entre captura y bienvenida sin duplicar su origen. El correlativo, la conservaci&#243;n ante fallo y el descarte expl&#237;cito tienen pruebas sin interfaz; las pruebas de widget comprueban la reacci&#243;n visible y la privacidad de la sesi&#243;n. <code>get_it</code> construye las dependencias, mientras Riverpod publica y observa estado.</p>
+<p>El informe a&#250;n tiene l&#237;mites verificables: falta el c&#243;digo anterior a la Semana 12, no hay historial Git ni URL remota, no se midieron reconstrucciones de widgets y las cuatro capturas guardadas a&#250;n deben prepararse para la edici&#243;n institucional. <code>riverpod_lint</code> no est&#225; declarado. Con Dart 3.13.1 de esta m&#225;quina puede evaluarse su versi&#243;n 3.1.9, pero el material previo documenta Dart 3.12.2; fijar el SDK m&#237;nimo del equipo es un paso previo a cambiar el grafo de dependencias (pub.dev, 2026).</p>
+<p>En la Semana 13 conviene estudiar <code>AsyncNotifier</code> para la recuperaci&#243;n de la preferencia del &#250;ltimo establecimiento y el ciclo de sesi&#243;n, hoy escritos como operaciones as&#237;ncronas sobre estados s&#237;ncronos. Tambi&#233;n se evaluar&#225;n las consultas de indicadores y diagn&#243;stico. Esta secci&#243;n anticipa la direcci&#243;n de estudio; no afirma una implementaci&#243;n ni una medici&#243;n que todav&#237;a no existen.</p>
+<h1>Referencias</h1>
+<p>Google. (s. f.). <em>Differentiate between ephemeral state and app state</em>. Flutter documentation. https://docs.flutter.dev/data-and-backend/state-mgmt/ephemeral-vs-app</p>
+<p>pub.dev. (2026). <em>riverpod_lint: Versions</em>. https://pub.dev/packages/riverpod_lint/versions</p>
+<p>Rousselet, R. (2025). <em>What&#39;s new in Riverpod 3.0</em>. Riverpod. https://riverpod.dev/docs/whats_new</p>
+<p>Rousselet, R. (2026a). <em>About code generation</em>. Riverpod. https://riverpod.dev/docs/concepts/about_code_generation</p>
+<p>Rousselet, R. (2026b). <em>DO/DON&#39;T</em>. Riverpod. https://riverpod.dev/docs/root/do_dont</p>
+<p>Rousselet, R. (2026c). <em>From Provider to Riverpod: Motivation</em>. Riverpod. https://riverpod.dev/docs/from_provider/motivation</p>
+<p>Rousselet, R. (2026d). <em>Providers</em>. Riverpod. https://riverpod.dev/docs/concepts2/providers</p>
+<p>Rousselet, R. (2026e). <em>Testing your providers</em>. Riverpod. https://riverpod.dev/docs/how_to/testing</p>
+<p>Universidad Andina del Cusco. (2026a). <em>Semana 12: Estructura del informe t&#233;cnico</em> [Plantilla de la asignatura SIS048, PDF suministrado].</p>
+<p>Universidad Andina del Cusco. (2026b). <em>Semana 12: Gu&#237;a de Aplicaci&#243;n 08, Parte I. Gesti&#243;n de estado con Riverpod</em> [Gu&#237;a de la asignatura SIS048, PDF suministrado].</p>
+<p class="note"><em>Nota de fuentes.</em> Las p&#225;ginas oficiales de Riverpod y Flutter se consultaron para revisar afirmaciones t&#233;cnicas; las versiones ejecutadas y los resultados del proyecto proceden exclusivamente de los archivos de evidencia locales. Las fechas y atribuciones bibliogr&#225;ficas de los materiales del curso deben confirmarse con sus portadas en la edici&#243;n final. Las letras del mismo autor y a&#241;o distinguen los t&#237;tulos citados en el texto.</p>
+<h1 class="annex">Anexo A. Configuraci&#243;n del entorno</h1>
+<p class="caption"><strong>Tabla A1.</strong> <em>Entorno verificado en esta revisi&#243;n</em></p>
+<table>
+<tr><th>Elemento</th><th>Valor comprobado</th><th>Evidencia</th></tr>
+<tr><td>Sistema</td><td>Microsoft Windows NT 10.0.26200.0</td><td><code>00_entorno.txt</code></td></tr>
+<tr><td>Flutter</td><td>3.47.1, canal stable</td><td><code>00_entorno.txt</code></td></tr>
+<tr><td>Dart</td><td>3.13.1, canal stable</td><td><code>00_entorno.txt</code></td></tr>
+<tr><td>Dependencias</td><td><code>flutter pub get</code> completado</td><td><code>01_flutter_pub_get.txt</code></td></tr>
+<tr><td>Generaci&#243;n</td><td><code>dart run build_runner build</code> completado, 90 outputs informados en la &#250;ltima ejecuci&#243;n incremental</td><td><code>12_build_runner_final.txt</code></td></tr>
+<tr><td>An&#225;lisis</td><td><code>flutter analyze --fatal-infos</code>: <code>No issues found!</code></td><td><code>15_flutter_analyze_navegacion.txt</code></td></tr>
+<tr><td>Pruebas</td><td><code>flutter test --reporter expanded</code>: 140 aprobadas y 1 omitida</td><td><code>16_flutter_test_navegacion.txt</code></td></tr>
+</table>
+<p class="caption"><strong>Tabla A2.</strong> <em>Problemas de entorno y resoluci&#243;n</em></p>
+<table>
+<tr><th>Situaci&#243;n observada</th><th>Acci&#243;n</th><th>Resultado y l&#237;mite</th></tr>
+<tr><td>Los procesos Flutter no conclu&#237;an dentro del aislamiento inicial de ejecuci&#243;n.</td><td>Se repitieron los comandos con el permiso de ejecuci&#243;n adecuado y se conservaron sus salidas.</td><td><code>pub get</code>, generaci&#243;n, an&#225;lisis y pruebas completaron. Este problema fue del entorno de verificaci&#243;n, no un fallo atribuido a Flutter ni al proyecto.</td></tr>
+<tr><td>El informe de fuentes previo describ&#237;a Flutter 3.44.9 y Dart 3.12.2 en otro laboratorio.</td><td>Se midieron de nuevo ambas versiones en esta m&#225;quina.</td><td>El resultado local es Flutter 3.47.1 y Dart 3.13.1. No se extrapola a otros equipos.</td></tr>
+<tr><td>Esta carpeta no contiene <code>.git</code>.</td><td>Se conserv&#243; <code>codigo_inicial.zip</code> y su manifiesto <code>sha256_inicial.txt</code> antes de editar.</td><td>Puede compararse esta revisi&#243;n con el ZIP recibido, pero no certificar commits ni la versi&#243;n de Semana 11.</td></tr>
+</table>
+<p>Para repetir la comprobaci&#243;n desde la ra&#237;z del proyecto: <code>flutter pub get</code>, <code>dart run build_runner build</code>, <code>flutter analyze --fatal-infos</code> y <code>flutter test --reporter expanded</code>. <code>scripts/verificar.sh</code> existe y se revis&#243;; en esta m&#225;quina se ejecutaron sus etapas por separado y se guardaron las salidas. El script puede requerir un int&#233;rprete Bash en Windows. Su invocaci&#243;n de <code>build_runner</code> no lleva el mismo modificador <code>--delete-conflicting-outputs</code> que CI; por eso se informa la etapa efectivamente ejecutada.</p>
+<h1 class="annex">Anexo B. Comparaci&#243;n de setState y Riverpod con datos reales</h1>
+<p class="caption"><strong>Tabla B1.</strong> <em>Medidas verificables y comparaciones limitadas por la evidencia disponible</em></p>
+<table>
+<tr><th>Indicador</th><th>Versi&#243;n anterior a Semana 12</th><th>ZIP recibido, ya identificado como Semana 12</th><th>Versi&#243;n revisada</th><th>Interpretaci&#243;n</th></tr>
+<tr><td><code>setState</code> ejecutable en <code>pantalla_oportunidades.dart</code></td><td>No verificable.</td><td>0</td><td>0</td><td>La migraci&#243;n de negocio ya estaba en el ZIP; esta revisi&#243;n la conserv&#243;.</td></tr>
+<tr><td><code>Notifier</code> de tema, captura y sesi&#243;n</td><td>No verificable.</td><td>3</td><td>3</td><td>Se conservaron los tres estados compartidos.</td></tr>
+<tr><td>Providers puente simples</td><td>No verificable.</td><td>8</td><td>10</td><td>Se publicaron base de datos y sembrador sin duplicar el grafo.</td></tr>
+<tr><td>Pruebas aprobadas</td><td>No verificable.</td><td>135</td><td>140</td><td>Cinco pruebas nuevas frente al ZIP recibido; no mide un cambio desde Semana 11.</td></tr>
+<tr><td>Pruebas omitidas</td><td>No verificable.</td><td>1</td><td>1</td><td>La omisi&#243;n expl&#237;cita corresponde a la migraci&#243;n del esquema v2.</td></tr>
+<tr><td>Reconstrucciones de widgets</td><td>No medidas.</td><td>No medidas.</td><td>No medidas.</td><td>El observador cuenta eventos de providers, no reconstrucciones.</td></tr>
+<tr><td>Tiempo de guardado o fotogramas</td><td>No medidos.</td><td>No medidos.</td><td>No medidos.</td><td>No se afirma una mejora de rendimiento.</td></tr>
+</table>
+<p><em>M&#233;todo.</em> El ZIP y sus hashes se guardaron antes de las modificaciones. Las cifras de pruebas proceden de <code>04_flutter_test.txt</code> y <code>16_flutter_test_navegacion.txt</code>; las llamadas ejecutables a <code>setState</code> y los providers se revisaron en los archivos correspondientes. Las menciones heredadas a seis campos y cinco llamadas en una versi&#243;n m&#225;s antigua son comentarios, no mediciones independientes. Sin una copia aut&#233;ntica de Semana 11, las columnas hist&#243;ricas permanecen abiertas.</p>
+<h1 class="annex">Anexo C. Evidencias censuradas</h1>
+<p class="caption"><strong>Tabla C1.</strong> <em>Capturas requeridas de la aplicaci&#243;n ejecutada</em></p>
+<table>
+<tr><th>C&#243;digo</th><th>Pantalla y acci&#243;n</th><th>Resultado observado</th><th>Preparaci&#243;n antes de insertar</th><th>Archivo guardado y secci&#243;n</th></tr>
+<tr><td>C1</td><td>Agregar tres oportunidades y volver a bienvenida.</td><td>Tarjeta de estado compartido con tres oportunidades.</td><td>Revisar encuadre y datos ajenos.</td><td><code>C1_bienvenida_borrador.png</code>; &#167;4.</td></tr>
+<tr><td>C2</td><td>Quitar una oportunidad intermedia en captura.</td><td>Oportunidades 01 y 03 sin renumeraci&#243;n; resumen con dos cumplidas.</td><td>Revisar encuadre y datos ajenos.</td><td><code>C2_captura_oportunidades.png</code>; &#167;6.</td></tr>
+<tr><td>C3</td><td>Abrir sesi&#243;n con credenciales simuladas.</td><td>Sesi&#243;n activa, rol, documento enmascarado, huella y caducidad; el valor del token no se ve.</td><td>Recortar el directorio simulado con nombres y documentos completos.</td><td><code>C3_sesion_huella.png</code>; &#167;7.</td></tr>
+<tr><td>C4</td><td>Modificar tema y captura con <code>flutter run</code>.</td><td>Dos eventos de actualizaci&#243;n <code>[riverpod]</code>.</td><td>Recortar la l&#237;nea de recarga de Flutter; no atribuir contadores a la imagen.</td><td><code>C4_traza_observador.png</code>; &#167;9.</td></tr>
+</table>
+<p class="caption">Figura 2. Evidencia C1 de la aplicaciÃ³n ejecutada</p><div class="figure"><img alt="EVIDENCIA_C1" src="file:///C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/docs/evidencias_semana12/capturas/C1_bienvenida_borrador.png" width="620"/></div>
+<p class="caption">Figura 3. Evidencia C2 de la aplicaciÃ³n ejecutada</p><div class="figure"><img alt="EVIDENCIA_C2" src="file:///C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/docs/evidencias_semana12/capturas/C2_captura_oportunidades.png" width="620"/></div>
+<p class="caption">Figura 4. Evidencia C3 de la aplicaciÃ³n ejecutada</p><div class="figure"><img alt="EVIDENCIA_C3" src="file:///C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/docs/evidencias_semana12/capturas/C3_sesion_huella.png" width="620"/></div>
+<p class="caption">Figura 5. Evidencia C4 de la aplicaciÃ³n ejecutada</p><div class="figure"><img alt="EVIDENCIA_C4" src="file:///C:/Users/joseq/OneDrive/Documentos/manos_seguras_semana12/docs/evidencias_semana12/capturas/C4_traza_observador.png" width="620"/></div>
+<p>Los cuatro PNG est&#225;n guardados en <code>docs/evidencias_semana12/capturas/</code>; <strong>no falta ninguna de C1–C4</strong>. Se abrieron y revisaron visualmente, pero a&#250;n no se han insertado en el documento paginado. El procedimiento de obtenci&#243;n est&#225; en <code>docs/Capturas_y_pendientes_Semana12.md</code>. El an&#225;lisis y las pruebas se adjuntan como salidas de texto, no como fotograf&#237;as de terminal.</p>
+<h1 class="annex">Anexo D. Guion de sustentaci&#243;n de cinco minutos</h1>
+<p class="caption"><strong>Tabla D1.</strong> <em>Ruta de exposici&#243;n</em></p>
+<table>
+<tr><th>Minutos</th><th>Demostraci&#243;n</th><th>Idea que debe poder explicar el equipo</th></tr>
+<tr><td>0:00–0:40</td><td>Grafo de &#167;4.</td><td><code>get_it</code> compone; diez providers puente publican; tres <code>Notifier</code> gestionan estado.</td></tr>
+<tr><td>0:40–1:35</td><td>C1 y C2.</td><td>Borrador compartido, correlativo, eliminaci&#243;n y <code>keepAlive</code>.</td></tr>
+<tr><td>1:35–2:15</td><td><code>guardar()</code> y sus pruebas.</td><td>No borrar antes de persistir; impedir duplicados si falla una preferencia auxiliar.</td></tr>
+<tr><td>2:15–3:05</td><td>C3.</td><td>Reentrada segura y valor del token oculto; cierre y expiraci&#243;n limpian el almac&#233;n.</td></tr>
+<tr><td>3:05–3:45</td><td>C4.</td><td>El observador registra eventos sin volcar valores sensibles.</td></tr>
+<tr><td>3:45–4:30</td><td>Salidas de &#167;8.</td><td>140 aprobadas, una omitida, cero hallazgos est&#225;ticos.</td></tr>
+<tr><td>4:30–5:00</td><td>&#167;10 y cierre.</td><td>Alcance de Semana 12 y l&#237;mites de comparaci&#243;n sin la versi&#243;n anterior.</td></tr>
+</table>
+<p>El texto listo para ensayar y las respuestas a preguntas previsibles est&#225;n en <code>docs/Guion_sustentacion_Semana12.md</code>. El tiempo es una pauta de exposici&#243;n; deber&#225; comprobarse con un ensayo cronometrado.</p>
+</body></html>
